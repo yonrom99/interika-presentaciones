@@ -97,6 +97,61 @@
             border-color: #636041;
             box-shadow: 0 0 0 2px rgba(99, 96, 65, 0.15);
         }
+    
+        /* ===================================================================== */
+        /* Estilos adicionales requeridos por las diapositivas de Fase 1.2       */
+        /* ===================================================================== */
+        .controls { z-index: 100; }
+        .logo-box { z-index: 60; }
+
+        #slide-portada, #slide-topografia, #slide-precedentes, #slide-areas, #slide-esquemas, #slide-volumetrica, #slide-modulo, #slide-resumen {
+            box-sizing: border-box;
+        }
+
+        /* La subportada "Fase 1.2" usa su animación original (translateX, 0.6s) */
+        #slide-portada.active { animation: fade-portada 0.6s ease-in-out; }
+        @keyframes fade-portada { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* Comportamiento de overflow propio de cada slide de Fase 1.2 */
+        #slide-topografia { overflow-y: auto; overflow-x: hidden; }
+        #slide-portada, #slide-precedentes, #slide-areas, #slide-esquemas, #slide-volumetrica, #slide-modulo, #slide-resumen { overflow: hidden; }
+
+        /* Pines interactivos (slide de Precedentes, Fase 1.2) */
+        .pin {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            width: 36px;
+            height: 36px;
+            background-color: #524F48;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            border: 2px solid white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 20;
+        }
+        .pin i {
+            font-size: 18px;
+        }
+        .pin:hover { transform: translate(-50%, -50%) scale(1.15); background-color: #000000; }
+        .pin.active { background-color: #636041; transform: translate(-50%, -50%) scale(1.15); border-color: #F5F2EB; z-index: 30; }
+
+        /* Panel Lateral Flotante (slide de Precedentes, Fase 1.2) */
+        #info-panel {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(20px);
+        }
+        #info-panel.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(0);
+        }
     </style>
 </head>
 <body>
@@ -1072,6 +1127,618 @@
         </div>
     </div>
 
+
+    <!-- ============================================================= -->
+    <!-- FASE 1.2 — Estudio arquitectónico preliminar (presentacion_completa.html) -->
+    <!-- ============================================================= -->
+
+<div class="slide relative overflow-hidden" id="slide-portada">
+<!-- Logo -->
+<div class="logo-box">
+<img alt="Logo Interika" src="presentacion/logo-interika.png"/>
+</div>
+<!-- Número Gigante de Fondo (Marca de Agua) -->
+<div class="absolute -right-10 -bottom-10 text-[28rem] font-extrabold text-int-light leading-none select-none z-0 tracking-tighter">
+            1.2
+        </div>
+<!-- Contenido Lateral -->
+<div class="flex-1 flex flex-col justify-center px-32 z-10 relative">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-16 h-[2px] bg-int-purple"></div>
+<h3 class="text-int-purple tracking-[0.3em] text-sm font-semibold uppercase">Fase 1.2</h3>
+</div>
+<h1 class="text-6xl font-bold text-int-dark mb-10 tracking-tight">Estudio arquitectónico preliminar</h1>
+<p class="text-xl text-int-gray max-w-2xl leading-relaxed font-light">
+                Análisis topográfico, zonificación y volumetría esquemática para determinar la capacidad real del predio y el número máximo de unidades/metros rentables.
+            </p>
+</div>
+</div>
+
+<div class="slide" id="slide-topografia">
+<!-- Logo con la clase original del index -->
+<div class="logo-box">
+<img alt="Logo Interika" src="presentacion/logo-interika.png"/>
+</div>
+<!-- Título Superior Derecho (Idéntico a las demás) -->
+<div class="absolute top-6 md:top-10 right-6 md:right-10 text-int-gray text-xs md:text-sm bg-white/80 md:bg-transparent px-2 md:px-0 py-1 md:py-0 rounded z-20">Topografía y Secciones</div>
+<!-- Contenedor general calcado del index -->
+<div class="flex-1 flex flex-col md:flex-row h-auto min-h-full pt-24 md:pt-32 px-6 md:px-20 pb-28 md:pb-20 gap-8 md:gap-16" data-active="" id="view-container">
+<!-- Columna Izquierda (Textos y Botones) -->
+<div class="w-full md:w-1/3 flex flex-col justify-center">
+<h1 class="text-3xl md:text-4xl font-bold text-int-dark mb-6 md:mb-10">Análisis Topográfico</h1>
+<p class="text-sm md:text-base text-int-gray mb-8 md:mb-12 font-light">Selecciona un corte para visualizar la sección transversal sobre el isométrico del terreno y su perfil correspondiente.</p>
+<div class="space-y-4">
+<button class="sec-btn w-full text-left px-5 md:px-6 py-4 md:py-5 rounded-2xl border border-gray-200 bg-white text-int-gray font-medium hover:border-int-purple transition-all flex items-center justify-between shadow-sm" onclick="toggleSection(1, this)">
+<span class="flex items-center gap-3"><i class="ph ph-intersect text-xl"></i> Sección 01</span>
+<i class="ph ph-caret-right text-lg"></i>
+</button>
+<button class="sec-btn w-full text-left px-5 md:px-6 py-4 md:py-5 rounded-2xl border border-gray-200 bg-white text-int-gray font-medium hover:border-int-purple transition-all flex items-center justify-between shadow-sm" onclick="toggleSection(2, this)">
+<span class="flex items-center gap-3"><i class="ph ph-intersect text-xl"></i> Sección 02</span>
+<i class="ph ph-caret-right text-lg"></i>
+</button>
+</div>
+</div>
+<!-- Columna Derecha (Visores Gráficos) -->
+<div class="w-full md:w-2/3 flex flex-col gap-4 md:gap-6 h-[60vh] md:h-auto">
+<!-- VISOR 1: Isométrico -->
+<div class="w-full flex-1 md:h-[60%] relative rounded-2xl overflow-hidden border border-gray-200 bg-[#f5f6f8]">
+<img class="absolute inset-0 w-full h-full object-contain p-4 md:p-8 z-0" src="presentacion/base-isometrico.png"/>
+<img class="absolute inset-0 w-full h-full object-contain p-4 md:p-8 z-10 opacity-0 transition-opacity duration-500" id="iso-1" src="presentacion/iso-seccion-1.png"/>
+<img class="absolute inset-0 w-full h-full object-contain p-4 md:p-8 z-10 opacity-0 transition-opacity duration-500" id="iso-2" src="presentacion/iso-seccion-2.png"/>
+</div>
+<!-- VISOR 2: Perfil 2D (Ajustado con object-cover) -->
+<div class="w-full h-48 md:h-[40%] relative rounded-2xl overflow-hidden border border-gray-200 bg-[#f5f6f8]">
+<img class="absolute inset-0 w-full h-full object-cover object-center opacity-0 transition-opacity duration-500" id="perfil-1" src="presentacion/perfil-1.png"/>
+<img class="absolute inset-0 w-full h-full object-cover object-center opacity-0 transition-opacity duration-500" id="perfil-2" src="presentacion/perfil-2.png"/>
+</div>
+</div>
+</div>
+</div>
+
+<div class="slide" id="slide-precedentes">
+<!-- CONTENEDOR RÍGIDO -->
+<div class="flex-1 relative w-full h-full bg-int-light overflow-hidden">
+<!-- Mapa de Fondo -->
+<img alt="Mapa Base" class="absolute inset-0 w-full h-full object-cover" src="presentacion/1.2-mapa-base.png"/>
+<!-- Capa de oscurecimiento al abrir panel -->
+<div class="absolute inset-0 bg-int-dark/30 backdrop-blur-[2px] opacity-0 transition-opacity duration-300 pointer-events-none z-10" id="map-overlay"></div>
+<!-- PINES INTERACTIVOS -->
+<div class="pin" onclick="openPanel(1, this)" style="top: 13%; left: 45%;"><i class="ph ph-buildings"></i></div>
+<div class="pin" onclick="openPanel(2, this)" style="top: 15%; left: 50%;"><i class="ph ph-buildings"></i></div>
+<div class="pin" onclick="openPanel(3, this)" style="top: 18%; left: 58%;"><i class="ph ph-buildings"></i></div>
+<div class="pin" onclick="openPanel(4, this)" style="top: 20%; left: 62%;"><i class="ph ph-buildings"></i></div>
+<div class="pin" onclick="openPanel(5, this)" style="top: 61%; left: 35%;"><i class="ph ph-buildings"></i></div>
+<div class="pin" onclick="openPanel(6, this)" style="top: 64%; left: 41%;"><i class="ph ph-buildings"></i></div>
+<div class="pin" onclick="openPanel(7, this)" style="top: 74%; left: 32%;"><i class="ph ph-buildings"></i></div>
+<!-- CAPA SUPERIOR (UI) -->
+<div class="absolute inset-0 z-50 pointer-events-none">
+<!-- Logo -->
+<div class="absolute top-10 left-10 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-xl shadow-sm border border-gray-100 pointer-events-auto h-12 flex items-center justify-center">
+<img alt="Logo Interika" class="h-full w-auto object-contain" src="presentacion/logo-interika.png"/>
+</div>
+<!-- Título Superior Derecho -->
+<div class="absolute top-10 right-10 text-int-gray text-sm pointer-events-auto bg-white/50 px-2 py-1 rounded backdrop-blur-sm font-medium tracking-wide">
+                    01 / Precedentes de Zona
+                </div>
+<!-- PANEL FLOTANTE DE INFORMACIÓN -->
+<div class="absolute top-28 left-10 w-80 bg-white/95 backdrop-blur-md border border-gray-200 shadow-2xl rounded-2xl overflow-hidden flex flex-col pointer-events-auto" id="info-panel">
+<!-- Botón de Cerrar -->
+<button class="absolute top-3 right-3 w-8 h-8 bg-black/40 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-int-purple transition-colors z-10" onclick="closePanel()">
+<i class="ph ph-x text-sm font-bold"></i>
+</button>
+<!-- Foto del inmueble -->
+<div class="h-44 w-full bg-gray-200 relative">
+<img alt="Torre" class="w-full h-full object-cover" id="panel-img" src=""/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<h2 class="absolute bottom-4 left-5 text-2xl font-bold text-white tracking-wide" id="panel-title">Torre</h2>
+</div>
+<!-- Datos -->
+<div class="p-5 flex-1 flex flex-col justify-between">
+<div class="space-y-5 mb-6">
+<div>
+<p class="text-[9px] font-bold text-int-gray uppercase tracking-widest mb-1">Ubicación</p>
+<p class="text-sm font-medium text-int-dark leading-snug" id="panel-loc">Av. del Deporte</p>
+</div>
+<div class="bg-int-light px-4 py-2.5 rounded-lg border border-gray-100 w-full">
+<p class="text-[9px] font-bold text-int-gray uppercase tracking-widest mb-1">Niveles</p>
+<p class="text-lg font-bold text-int-dark flex items-center gap-1.5"><i class="ph ph-buildings text-int-purple"></i> <span id="panel-levels">5</span></p>
+</div>
+</div>
+<!-- Botón Maps -->
+<a class="w-full flex items-center justify-center gap-2 bg-int-purple text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-int-dark transition-colors shadow-sm" href="#" id="panel-link" target="_blank">
+<i class="ph ph-map-pin-line text-lg"></i> Ver en Google Maps
+                        </a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="slide" id="slide-areas">
+<div class="logo-box">
+<img alt="Logo Interika" src="presentacion/logo-interika.png"/>
+</div>
+<div class="absolute top-10 right-10 text-int-gray text-sm bg-white/80 px-2 py-1 rounded z-20 font-medium tracking-wide">
+            03 / Cuadro de Áreas
+        </div>
+<!-- Se ajustó el pt-20 y pb-8 para aprovechar al máximo la pantalla sin escrolear -->
+<div class="flex-1 flex flex-col h-full pt-[90px] px-16 pb-8">
+<!-- Encabezado compacto pero con fuente grande -->
+<h1 class="text-3xl font-bold text-int-dark mb-1 text-center tracking-tight">Programa Arquitectónico</h1>
+<p class="text-sm text-int-gray mb-6 text-center font-light">Desglose analítico de superficies vendibles y no vendibles del proyecto.</p>
+<!-- Grid de Áreas: Flexible para llenar el espacio -->
+<div class="flex flex-row gap-6 flex-1 min-h-0">
+<!-- COLUMNA 1: VENDIBLE -->
+<div class="w-5/12 bg-white rounded-2xl shadow-sm border border-gray-200 flex flex-col overflow-hidden h-full">
+<div class="bg-graf-olive/10 px-5 py-3 border-b border-graf-olive/20 flex justify-between items-center">
+<h3 class="font-bold text-int-dark text-base flex items-center gap-2">
+<i class="ph ph-key text-graf-olive text-lg"></i> Zona Privada
+                        </h3>
+<span class="bg-graf-olive text-white text-[10px] px-2 py-0.5 rounded font-bold tracking-widest uppercase shadow-sm">Vendible</span>
+</div>
+<div class="p-5 flex-1 flex flex-col justify-between">
+<div>
+<span class="text-xs font-bold text-int-gray uppercase tracking-widest border-b border-gray-100 block pb-1.5 mb-2">Deptos Tipo A</span>
+<ul class="text-sm space-y-1">
+<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Cocina</span> <span class="font-medium text-int-dark">8.40 m²</span></li>
+<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Sala / Comedor</span> <span class="font-medium text-int-dark">13.50 m²</span></li>
+<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Cuarto de Lavado</span> <span class="font-medium text-int-dark">5.00 m²</span></li>
+<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Recámara 1</span> <span class="font-medium text-int-dark">12.00 m²</span></li>
+<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Recámara 2</span> <span class="font-medium text-int-dark">12.00 m²</span></li>
+<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Baño Recámara 1</span> <span class="font-medium text-int-dark">4.16 m²</span></li>
+<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Baño Recámara 2</span> <span class="font-medium text-int-dark">4.16 m²</span></li>
+<li class="flex justify-between py-1.5"><span class="text-int-gray">Vertedero</span> <span class="font-medium text-int-dark">0.50 m²</span></li>
+</ul>
+</div>
+<div class="mt-4 bg-gray-50 p-3 rounded-xl border border-gray-100 flex justify-between items-center">
+<div>
+<p class="text-[10px] text-int-gray uppercase tracking-widest font-semibold mb-0.5">M² Totales / Unidad</p>
+<p class="text-lg font-bold text-int-dark">59.72 m²</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] text-int-gray uppercase tracking-widest font-semibold mb-0.5">Cantidad</p>
+<p class="text-lg font-bold text-int-dark">× 10</p>
+</div>
+</div>
+</div>
+<div class="bg-graf-olive/5 px-5 py-4 border-t border-graf-olive/20 flex justify-between items-center">
+<span class="text-sm font-bold text-int-dark uppercase tracking-wider">Total de Deptos</span>
+<span class="text-xl font-bold text-graf-olive">597.20 m²</span>
+</div>
+</div>
+<!-- COLUMNA 2: NO VENDIBLE -->
+<div class="w-7/12 bg-white rounded-2xl shadow-sm border border-gray-200 flex flex-col overflow-hidden h-full">
+<div class="bg-gray-50 px-5 py-3 border-b border-gray-200 flex justify-between items-center">
+<h3 class="font-bold text-int-dark text-base flex items-center gap-2">
+<i class="ph ph-users-three text-int-gray text-lg"></i> Público y Servicios
+                        </h3>
+<span class="bg-int-gray text-white text-[10px] px-2 py-0.5 rounded font-bold tracking-widest uppercase shadow-sm">No Vendible</span>
+</div>
+<!-- Dos columnas internas para aprovechar el ancho -->
+<div class="p-5 flex-1 grid grid-cols-2 gap-8 content-start">
+<!-- Lista Público -->
+<div>
+<span class="text-xs font-bold text-int-gray uppercase tracking-widest border-b border-gray-100 block pb-1.5 mb-2">Zona Pública</span>
+<ul class="text-sm space-y-1">
+<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Amenidades (Cowork., Terraza)</span> <span class="font-medium text-int-dark">125.00 m²</span></li>
+<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Estacionamientos y Circ.</span> <span class="font-medium text-int-dark">221.00 m²</span></li>
+<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Áreas Verdes</span> <span class="font-medium text-int-dark">40.00 m²</span></li>
+<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Escaleras</span> <span class="font-medium text-int-dark">40.00 m²</span></li>
+<li class="flex justify-between py-1.5"><span class="text-int-gray">Pasillos</span> <span class="font-medium text-int-dark">90.00 m²</span></li>
+</ul>
+<div class="mt-3 flex justify-between items-center border-t border-gray-200 pt-2">
+<span class="text-[10px] font-bold text-int-gray uppercase tracking-widest">Subtotal Público</span>
+<span class="font-bold text-int-dark text-sm">516.00 m²</span>
+</div>
+</div>
+<!-- Lista Servicios -->
+<div>
+<span class="text-xs font-bold text-int-gray uppercase tracking-widest border-b border-gray-100 block pb-1.5 mb-2">Zona de Servicios</span>
+<ul class="text-sm space-y-1">
+<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Lobby (Sala / Recepción)</span> <span class="font-medium text-int-dark">20.00 m²</span></li>
+<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Baño Lobby</span> <span class="font-medium text-int-dark">4.16 m²</span></li>
+<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Amazon Room</span> <span class="font-medium text-int-dark">3.00 m²</span></li>
+<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Cuartos Téc. (Máq/Luz/Agua)</span> <span class="font-medium text-int-dark">14.50 m²</span></li>
+<li class="flex justify-between py-1.5"><span class="text-int-gray">Bodegas (Limpieza / Serv.)</span> <span class="font-medium text-int-dark">10.00 m²</span></li>
+</ul>
+<div class="mt-3 flex justify-between items-center border-t border-gray-200 pt-2">
+<span class="text-[10px] font-bold text-int-gray uppercase tracking-widest">Subtotal Servicios</span>
+<span class="font-bold text-int-dark text-sm">51.66 m²</span>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 px-5 py-4 border-t border-gray-200 flex justify-between items-center mt-auto">
+<span class="text-sm font-bold text-int-dark uppercase tracking-wider">Total No Vendible</span>
+<span class="text-xl font-bold text-int-gray">567.66 m²</span>
+</div>
+</div>
+</div>
+<!-- BARRA DE MÉTRICAS (Ubicada exactamente al fondo, sin márgenes excesivos) -->
+<div class="mt-6 bg-int-dark rounded-2xl p-4 shadow-lg text-white grid grid-cols-3 divide-x divide-gray-700 text-center flex-shrink-0">
+<div class="px-4">
+<p class="text-[11px] text-gray-400 uppercase tracking-widest font-semibold mb-0.5">Área Vendible</p>
+<p class="text-2xl font-bold text-graf-olive">597.20 <span class="text-sm font-medium">m²</span></p>
+<p class="text-[10px] text-graf-olive/80 mt-1 font-medium bg-graf-olive/10 inline-block px-2 py-0.5 rounded">51.3% de eficiencia</p>
+</div>
+<div class="px-4">
+<p class="text-[11px] text-gray-400 uppercase tracking-widest font-semibold mb-0.5">Área No Vendible</p>
+<p class="text-2xl font-bold text-int-gray">567.66 <span class="text-sm font-medium">m²</span></p>
+<p class="text-[10px] text-gray-400 mt-1 font-medium bg-white/5 inline-block px-2 py-0.5 rounded">48.7% del proyecto</p>
+</div>
+<div class="px-4">
+<p class="text-[11px] text-gray-400 uppercase tracking-widest font-semibold mb-0.5">Total Construcción</p>
+<p class="text-2xl font-bold text-white">1,164.86 <span class="text-sm font-medium">m²</span></p>
+<p class="text-[10px] text-gray-400 mt-1 font-medium">100%</p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="slide bg-white" id="slide-esquemas">
+<!-- Logo -->
+<div class="logo-box">
+<img alt="Logo Interika" src="presentacion/logo-interika.png"/>
+</div>
+<!-- Título Superior Derecho -->
+<div class="absolute top-10 right-10 text-int-gray text-xs md:text-sm bg-white/80 px-4 py-2 rounded-lg z-50 font-medium tracking-wide">
+            04 / Esquemas de Distribución
+        </div>
+<!-- TÍTULO PRINCIPAL (Centrado arriba, libre de empalmes) -->
+<div class="absolute top-10 w-full flex flex-col items-center z-20 pointer-events-none">
+<h1 class="text-3xl md:text-4xl font-bold text-int-dark mb-1 tracking-tight">Zonificación por Niveles</h1>
+<p class="text-sm text-int-gray font-light">Análisis de uso y distribución espacial del proyecto.</p>
+</div>
+<!-- CONTENEDOR DE IMÁGENES RESTRINGIDO -->
+<!-- top-[140px] asegura que el plano baje y no toque el título. bottom-[100px] lo separa de los botones -->
+<div class="absolute top-[140px] bottom-[100px] left-[380px] right-10 flex items-center justify-center z-10 pointer-events-none">
+<img class="level-img absolute w-full h-full object-contain transition-opacity duration-500 opacity-100" id="img-pb" src="presentacion/planta-baja.png"/>
+<img class="level-img absolute w-full h-full object-contain transition-opacity duration-500 opacity-0" id="img-n1" src="presentacion/nivel-1.png"/>
+<img class="level-img absolute w-full h-full object-contain transition-opacity duration-500 opacity-0" id="img-n2" src="presentacion/nivel-2.png"/>
+<img class="level-img absolute w-full h-full object-contain transition-opacity duration-500 opacity-0" id="img-n3" src="presentacion/nivel-3.png"/>
+</div>
+<!-- TARJETAS FLOTANTES DE INFORMACIÓN -->
+<div class="absolute top-1/2 transform -translate-y-1/2 left-10 md:left-12 z-40 w-[300px] md:w-[320px] h-[480px]">
+<!-- Tarjeta PB -->
+<div class="level-card absolute inset-0 bg-white rounded-[2rem] shadow-xl p-8 transition-opacity duration-500 opacity-100 flex flex-col justify-center" id="card-pb">
+<h2 class="text-2xl md:text-3xl font-bold text-int-dark mb-1">Planta Baja</h2>
+<p class="text-[10px] text-int-gray mb-8 uppercase tracking-widest font-bold">Distribución Inicial</p>
+<div class="space-y-6">
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-1"><i class="ph ph-key text-int-gray text-sm"></i> Uso de Planta</p>
+<p class="text-sm font-bold text-int-dark">Público y Servicios</p>
+</div>
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-1"><i class="ph ph-bounding-box text-int-gray text-sm"></i> Área Utilizada</p>
+<p class="text-sm font-bold text-int-dark">59.00 m²</p>
+</div>
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-3"><i class="ph ph-list-dashes text-int-gray text-sm"></i> Espacios</p>
+<ul class="text-[11px] text-int-gray font-medium leading-relaxed space-y-1.5">
+<li>• Lobby y Escaleras</li>
+<li>• Cto. de Servicio y Baño</li>
+<li>• Cto. de Máquinas y Basura</li>
+<li>• Paquetería</li>
+<li>• Cto. Transformador, CFE y Sapal</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Tarjeta N1 -->
+<div class="level-card absolute inset-0 bg-white rounded-[2rem] shadow-xl p-8 transition-opacity duration-500 opacity-0 pointer-events-none flex flex-col justify-center" id="card-n1">
+<h2 class="text-2xl md:text-3xl font-bold text-int-dark mb-1">Nivel 01</h2>
+<p class="text-[10px] text-int-gray mb-8 uppercase tracking-widest font-bold">Zona Residencial</p>
+<div class="space-y-6">
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-1"><i class="ph ph-key text-int-gray text-sm"></i> Uso de Planta</p>
+<p class="text-sm font-bold text-int-dark">Privado</p>
+</div>
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-1"><i class="ph ph-bounding-box text-int-gray text-sm"></i> Área Utilizada</p>
+<p class="text-sm font-bold text-int-dark">268.73 m²</p>
+</div>
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-3"><i class="ph ph-list-dashes text-int-gray text-sm"></i> Espacios</p>
+<ul class="text-[11px] text-int-gray font-medium leading-relaxed space-y-1.5">
+<li>• Departamentos (4 unidades)</li>
+<li>• Escaleras</li>
+<li>• Pasillos de Circulación</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Tarjeta N2 -->
+<div class="level-card absolute inset-0 bg-white rounded-[2rem] shadow-xl p-8 transition-opacity duration-500 opacity-0 pointer-events-none flex flex-col justify-center" id="card-n2">
+<h2 class="text-2xl md:text-3xl font-bold text-int-dark mb-1">Nivel 02</h2>
+<p class="text-[10px] text-int-gray mb-8 uppercase tracking-widest font-bold">Zona Residencial</p>
+<div class="space-y-6">
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-1"><i class="ph ph-key text-int-gray text-sm"></i> Uso de Planta</p>
+<p class="text-sm font-bold text-int-dark">Privado</p>
+</div>
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-1"><i class="ph ph-bounding-box text-int-gray text-sm"></i> Área Utilizada</p>
+<p class="text-sm font-bold text-int-dark">268.73 m²</p>
+</div>
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-3"><i class="ph ph-list-dashes text-int-gray text-sm"></i> Espacios</p>
+<ul class="text-[11px] text-int-gray font-medium leading-relaxed space-y-1.5">
+<li>• Departamentos (4 unidades)</li>
+<li>• Escaleras</li>
+<li>• Pasillos de Circulación</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Tarjeta N3 -->
+<div class="level-card absolute inset-0 bg-white rounded-[2rem] shadow-xl p-8 transition-opacity duration-500 opacity-0 pointer-events-none flex flex-col justify-center" id="card-n3">
+<h2 class="text-2xl md:text-3xl font-bold text-int-dark mb-1">Nivel 03</h2>
+<p class="text-[10px] text-int-gray mb-8 uppercase tracking-widest font-bold">Residencial &amp; Amenidades</p>
+<div class="space-y-6">
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-1"><i class="ph ph-key text-int-gray text-sm"></i> Uso de Planta</p>
+<p class="text-sm font-bold text-int-dark">Privado y Público</p>
+</div>
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-1"><i class="ph ph-bounding-box text-int-gray text-sm"></i> Área Utilizada</p>
+<p class="text-sm font-bold text-int-dark">268.73 m²</p>
+</div>
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-3"><i class="ph ph-list-dashes text-int-gray text-sm"></i> Espacios</p>
+<ul class="text-[11px] text-int-gray font-medium leading-relaxed space-y-1.5">
+<li>• Departamentos (2 unidades)</li>
+<li>• Terraza Exterior</li>
+<li>• Área de Coworking</li>
+<li>• Escaleras y Pasillos</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- NAVEGADOR INFERIOR TIPO PÍLDORA -->
+<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-50 bg-white rounded-full shadow-md p-1.5 flex gap-1 items-center pointer-events-auto border border-gray-100">
+<button class="nav-pill px-6 py-2.5 rounded-full text-xs font-bold transition-all duration-300 bg-int-purple text-white shadow-sm" id="btn-pb" onclick="changeLevel('pb')">
+                Planta Baja
+            </button>
+<button class="nav-pill px-6 py-2.5 rounded-full text-xs font-bold transition-all duration-300 text-int-gray hover:bg-gray-100" id="btn-n1" onclick="changeLevel('n1')">
+                Nivel 01
+            </button>
+<button class="nav-pill px-6 py-2.5 rounded-full text-xs font-bold transition-all duration-300 text-int-gray hover:bg-gray-100" id="btn-n2" onclick="changeLevel('n2')">
+                Nivel 02
+            </button>
+<button class="nav-pill px-6 py-2.5 rounded-full text-xs font-bold transition-all duration-300 text-int-gray hover:bg-gray-100" id="btn-n3" onclick="changeLevel('n3')">
+                Nivel 03
+            </button>
+</div>
+</div>
+
+<div class="slide bg-white" id="slide-volumetrica">
+<div class="logo-box">
+<img alt="Logo Interika" src="presentacion/logo-interika.png"/>
+</div>
+<div class="absolute top-12 right-12 text-int-gray text-sm font-medium tracking-wide z-50">
+            05 / Evolución Volumétrica
+        </div>
+<div class="absolute top-10 w-full flex flex-col items-center z-20 pointer-events-none">
+<h1 class="text-3xl md:text-4xl font-bold text-int-dark mb-1 tracking-tight">Crecimiento del Proyecto</h1>
+<p class="text-sm text-int-gray font-light">Desarrollo por etapas de la torre residencial.</p>
+</div>
+<!-- CONTENEDOR DE IMÁGENES (Isométricos) -->
+<div class="absolute top-[120px] bottom-[100px] left-[380px] right-10 flex items-center justify-center z-10 pointer-events-none">
+<img class="vol-img absolute w-full h-full object-contain transition-opacity duration-500 opacity-100" id="iso-f1" src="presentacion/ISO 1.png"/>
+<img class="vol-img absolute w-full h-full object-contain transition-opacity duration-500 opacity-0" id="iso-f2" src="presentacion/ISO 2.png"/>
+<img class="vol-img absolute w-full h-full object-contain transition-opacity duration-500 opacity-0" id="iso-f3" src="presentacion/ISO 3.png"/>
+<img class="vol-img absolute w-full h-full object-contain transition-opacity duration-500 opacity-0" id="iso-f4" src="presentacion/ISO 4.png"/>
+</div>
+<!-- TARJETAS FLOTANTES DE INFORMACIÓN -->
+<div class="absolute top-1/2 transform -translate-y-1/2 left-10 md:left-12 z-40 w-[300px] md:w-[320px] h-[440px]">
+<!-- Fase 1 -->
+<div class="vol-card absolute inset-0 bg-[#FAFAFA] rounded-[2rem] border border-gray-100 shadow-sm p-8 transition-opacity duration-500 opacity-100 flex flex-col justify-center" id="card-f1">
+<h2 class="text-2xl md:text-3xl font-bold text-int-dark mb-1">Fase 1</h2>
+<p class="text-[10px] text-int-gray mb-8 uppercase tracking-widest font-bold">Base y Núcleo</p>
+<div class="space-y-6">
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-1"><i class="ph ph-bounding-box text-int-gray text-sm"></i> Desplante</p>
+<p class="text-sm font-bold text-int-dark">Nivel Calle (0.00)</p>
+</div>
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-3"><i class="ph ph-list-dashes text-int-gray text-sm"></i> Elementos</p>
+<ul class="text-[11px] text-int-gray font-medium leading-relaxed space-y-1.5">
+<li>• Preparación de Lobby</li>
+<li>• Núcleo central de escaleras</li>
+<li>• Áreas técnicas y cuartos de servicio</li>
+<li>• Delimitación de estacionamientos</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Fase 2 -->
+<div class="vol-card absolute inset-0 bg-[#FAFAFA] rounded-[2rem] border border-gray-100 shadow-sm p-8 transition-opacity duration-500 opacity-0 pointer-events-none flex flex-col justify-center" id="card-f2">
+<h2 class="text-2xl md:text-3xl font-bold text-int-dark mb-1">Fase 2</h2>
+<p class="text-[10px] text-int-gray mb-8 uppercase tracking-widest font-bold">Primer Bloque</p>
+<div class="space-y-6">
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-1"><i class="ph ph-bounding-box text-int-gray text-sm"></i> Desplante</p>
+<p class="text-sm font-bold text-int-dark">Nivel 01</p>
+</div>
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-3"><i class="ph ph-list-dashes text-int-gray text-sm"></i> Elementos</p>
+<ul class="text-[11px] text-int-gray font-medium leading-relaxed space-y-1.5">
+<li>• Construcción de 4 Departamentos Tipo A</li>
+<li>• Conexión con núcleo de escaleras</li>
+<li>• Circulaciones horizontales</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Fase 3 -->
+<div class="vol-card absolute inset-0 bg-[#FAFAFA] rounded-[2rem] border border-gray-100 shadow-sm p-8 transition-opacity duration-500 opacity-0 pointer-events-none flex flex-col justify-center" id="card-f3">
+<h2 class="text-2xl md:text-3xl font-bold text-int-dark mb-1">Fase 3</h2>
+<p class="text-[10px] text-int-gray mb-8 uppercase tracking-widest font-bold">Segundo Bloque</p>
+<div class="space-y-6">
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-1"><i class="ph ph-bounding-box text-int-gray text-sm"></i> Desplante</p>
+<p class="text-sm font-bold text-int-dark">Nivel 02</p>
+</div>
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-3"><i class="ph ph-list-dashes text-int-gray text-sm"></i> Elementos</p>
+<ul class="text-[11px] text-int-gray font-medium leading-relaxed space-y-1.5">
+<li>• Construcción de 4 Departamentos Tipo A</li>
+<li>• Continuidad de fachadas</li>
+<li>• Consolidación del volumen habitacional</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Fase 4 -->
+<div class="vol-card absolute inset-0 bg-[#FAFAFA] rounded-[2rem] border border-gray-100 shadow-sm p-8 transition-opacity duration-500 opacity-0 pointer-events-none flex flex-col justify-center" id="card-f4">
+<h2 class="text-2xl md:text-3xl font-bold text-int-dark mb-1">Fase 4</h2>
+<p class="text-[10px] text-int-gray mb-8 uppercase tracking-widest font-bold">Remate y Amenidades</p>
+<div class="space-y-6">
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-1"><i class="ph ph-bounding-box text-int-gray text-sm"></i> Desplante</p>
+<p class="text-sm font-bold text-int-dark">Nivel 03</p>
+</div>
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-3"><i class="ph ph-list-dashes text-int-gray text-sm"></i> Elementos</p>
+<ul class="text-[11px] text-int-gray font-medium leading-relaxed space-y-1.5">
+<li>• Construcción de 2 Departamentos Tipo A</li>
+<li>• Terraza exterior panorámica</li>
+<li>• Área de Coworking (Uso Público)</li>
+<li>• Finalización del núcleo de escaleras</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- NAVEGADOR INFERIOR TIPO PÍLDORA -->
+<div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-50 bg-[#FAFAFA] rounded-full shadow-sm border border-gray-100 p-1.5 flex gap-1 items-center pointer-events-auto">
+<button class="vol-pill px-6 py-2.5 rounded-full text-xs font-bold transition-all duration-300 bg-int-purple text-white shadow-sm" id="btn-f1" onclick="changeVol('f1')">
+                Fase 01
+            </button>
+<button class="vol-pill px-6 py-2.5 rounded-full text-xs font-bold transition-all duration-300 text-int-gray hover:bg-gray-200" id="btn-f2" onclick="changeVol('f2')">
+                Fase 02
+            </button>
+<button class="vol-pill px-6 py-2.5 rounded-full text-xs font-bold transition-all duration-300 text-int-gray hover:bg-gray-200" id="btn-f3" onclick="changeVol('f3')">
+                Fase 03
+            </button>
+<button class="vol-pill px-6 py-2.5 rounded-full text-xs font-bold transition-all duration-300 text-int-gray hover:bg-gray-200" id="btn-f4" onclick="changeVol('f4')">
+                Fase 04
+            </button>
+</div>
+</div>
+
+<div class="slide bg-white" id="slide-modulo">
+<div class="logo-box">
+<img alt="Logo Interika" src="presentacion/logo-interika.png"/>
+</div>
+<div class="absolute top-12 right-12 text-int-gray text-sm font-medium tracking-wide z-50">
+            06 / Módulo Residencial
+        </div>
+<div class="absolute top-10 w-full flex flex-col items-center z-20 pointer-events-none">
+<h1 class="text-3xl md:text-4xl font-bold text-int-dark mb-1 tracking-tight">Distribución Interior</h1>
+<p class="text-sm text-int-gray font-light">Análisis espacial del Departamento Tipo A.</p>
+</div>
+<!-- El isométrico del departamento -->
+<div class="absolute top-[120px] bottom-[40px] left-[380px] right-10 flex items-center justify-center z-10 pointer-events-none">
+<img class="w-full h-full object-contain p-8" src="presentacion/ISO DEPA.png"/>
+</div>
+<!-- Tarjeta de Desglose de Áreas -->
+<div class="absolute top-1/2 transform -translate-y-1/2 left-10 md:left-12 z-40 w-[300px] md:w-[320px] h-auto">
+<div class="bg-[#FAFAFA] rounded-[2rem] border border-gray-100 shadow-sm p-8 flex flex-col justify-center">
+<h2 class="text-2xl md:text-3xl font-bold text-int-dark mb-1">Depto Tipo A</h2>
+<p class="text-[10px] text-int-gray mb-8 uppercase tracking-widest font-bold">Unidad Base</p>
+<div class="space-y-6">
+<div>
+<p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-2"><i class="ph ph-squares-four text-int-gray text-sm"></i> Desglose de Superficie</p>
+<ul class="text-xs text-int-gray font-medium space-y-2">
+<li class="flex justify-between border-b border-gray-200 pb-1.5"><span>Sala / Comedor</span> <strong class="text-int-dark">13.50 m²</strong></li>
+<li class="flex justify-between border-b border-gray-200 pb-1.5"><span>Cocina</span> <strong class="text-int-dark">8.40 m²</strong></li>
+<li class="flex justify-between border-b border-gray-200 pb-1.5"><span>Recámara 1</span> <strong class="text-int-dark">12.00 m²</strong></li>
+<li class="flex justify-between border-b border-gray-200 pb-1.5"><span>Recámara 2</span> <strong class="text-int-dark">12.00 m²</strong></li>
+<li class="flex justify-between border-b border-gray-200 pb-1.5"><span>Baño Rec. 1</span> <strong class="text-int-dark">4.16 m²</strong></li>
+<li class="flex justify-between border-b border-gray-200 pb-1.5"><span>Baño Rec. 2</span> <strong class="text-int-dark">4.16 m²</strong></li>
+<li class="flex justify-between border-b border-gray-200 pb-1.5"><span>Cuarto de Lavado</span> <strong class="text-int-dark">5.00 m²</strong></li>
+<li class="flex justify-between pb-1.5"><span>Vertedero</span> <strong class="text-int-dark">0.50 m²</strong></li>
+</ul>
+</div>
+<div class="bg-white border border-gray-200 p-4 rounded-xl flex justify-between items-center shadow-sm">
+<span class="text-[10px] text-int-gray uppercase tracking-widest font-bold">Área Total Vendible</span>
+<span class="text-xl font-bold text-graf-olive">59.72 m²</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="slide bg-white" id="slide-resumen">
+<!-- Logo -->
+<div class="logo-box">
+<img alt="Logo Interika" src="presentacion/logo-interika.png"/>
+</div>
+<!-- Texto limpio en la esquina sin recuadro -->
+<div class="absolute top-12 right-12 text-int-gray text-sm font-medium tracking-wide z-50">
+            07 / Resumen del Proyecto
+        </div>
+<!-- Título -->
+<div class="absolute top-10 w-full flex flex-col items-center z-20 pointer-events-none">
+<h1 class="text-3xl md:text-4xl font-bold text-int-dark mb-1 tracking-tight">Síntesis General</h1>
+<p class="text-sm text-int-gray font-light">Resumen de capacidades, superficies y recorrido visual.</p>
+</div>
+<!-- Contenedor Principal Dividido -->
+<div class="absolute top-[120px] bottom-[50px] left-12 right-12 flex gap-8 z-10">
+<!-- COLUMNA IZQUIERDA: RESUMEN DE DATOS -->
+<div class="w-5/12 bg-[#FAFAFA] rounded-[2rem] border border-gray-100 shadow-sm p-8 flex flex-col justify-between overflow-y-auto">
+<div>
+<!-- Capacidad y Terreno -->
+<div class="mb-5">
+<p class="text-[10px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-3 border-b border-gray-200 pb-1.5"><i class="ph ph-info text-sm"></i> Especificaciones del Proyecto</p>
+<ul class="text-[11px] text-int-gray font-medium space-y-2">
+<li class="flex justify-between"><span>Topografía</span> <strong class="text-int-dark text-right">Terreno plano (Pendiente 25cm)</strong></li>
+<li class="flex justify-between"><span>Niveles</span> <strong class="text-int-dark">4 Niveles (Desde 0.00)</strong></li>
+<li class="flex justify-between"><span>Unidades</span> <strong class="text-int-dark">10 Deptos. de 60 m²</strong></li>
+<li class="flex justify-between"><span>Estacionamiento</span> <strong class="text-int-dark">10 Cajones</strong></li>
+</ul>
+</div>
+<!-- Huella por Nivel -->
+<div class="mb-5">
+<p class="text-[10px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-3 border-b border-gray-200 pb-1.5"><i class="ph ph-stack text-sm"></i> Área Utilizada por Nivel</p>
+<ul class="text-[11px] text-int-gray font-medium space-y-2">
+<li class="flex justify-between"><span>Planta Baja</span> <strong class="text-int-dark">59.00 m²</strong></li>
+<li class="flex justify-between"><span>Nivel 01</span> <strong class="text-int-dark">268.73 m²</strong></li>
+<li class="flex justify-between"><span>Nivel 02</span> <strong class="text-int-dark">268.73 m²</strong></li>
+<li class="flex justify-between"><span>Nivel 03</span> <strong class="text-int-dark">268.73 m²</strong></li>
+</ul>
+</div>
+</div>
+<!-- Resumen de Áreas Totales -->
+<div>
+<div class="grid grid-cols-2 gap-3 mb-4">
+<div class="bg-white border border-gray-200 p-3.5 rounded-xl shadow-sm">
+<span class="text-[9px] text-int-gray uppercase tracking-widest font-bold block mb-1">Área Vendible</span>
+<span class="text-xl font-bold text-graf-olive">597.20 m²</span>
+</div>
+<div class="bg-white border border-gray-200 p-3.5 rounded-xl shadow-sm">
+<span class="text-[9px] text-int-gray uppercase tracking-widest font-bold block mb-1">Área No Vendible</span>
+<span class="text-xl font-bold text-int-gray">567.66 m²</span>
+</div>
+</div>
+<div class="bg-int-purple text-white p-4 rounded-xl flex justify-between items-center shadow-md">
+<span class="text-[10px] uppercase tracking-widest font-bold text-white/80">Área Total de Construcción</span>
+<span class="text-2xl font-bold">1,164.86 m²</span>
+</div>
+</div>
+</div>
+<!-- COLUMNA DERECHA: REPRODUCTOR DE VIDEO BUCLE -->
+<div class="w-7/12 rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm bg-[#FAFAFA] relative">
+<video autoplay="" class="absolute inset-0 w-full h-full object-cover" loop="" muted="" playsinline="">
+<!-- Ruta del video a reproducir -->
+<source src="presentacion/PV.gif" type="video/mp4"/>
+                    Tu navegador no soporta la reproducción de video.
+                </video>
+</div>
+</div>
+</div>
+
     <script>
         let current = 0;
         const slides = document.querySelectorAll('.slide');
@@ -1200,6 +1867,172 @@
                 
                 container.dataset.active = mapId;
             }
+        }
+    
+        // ============================================================= 
+        // FASE 1.2 — funciones propias de sus diapositivas
+        // ============================================================= 
+        // ============ Slide: Topografía y Secciones (1.html) ============
+        function toggleSection(secId, btnElement) {
+            const container = document.getElementById('view-container');
+            const isActive = container.dataset.active == secId;
+
+            document.querySelectorAll('.sec-btn').forEach(btn => {
+                btn.classList.remove('bg-int-purple', 'text-white', 'border-int-purple');
+                btn.classList.add('bg-white', 'text-int-gray', 'border-gray-200');
+            });
+
+            document.getElementById('iso-1').classList.replace('opacity-100', 'opacity-0');
+            document.getElementById('iso-2').classList.replace('opacity-100', 'opacity-0');
+            document.getElementById('perfil-1').classList.replace('opacity-100', 'opacity-0');
+            document.getElementById('perfil-2').classList.replace('opacity-100', 'opacity-0');
+
+            if (isActive) {
+                container.dataset.active = '';
+            } else {
+                document.getElementById('iso-' + secId).classList.replace('opacity-0', 'opacity-100');
+                document.getElementById('perfil-' + secId).classList.replace('opacity-0', 'opacity-100');
+
+                btnElement.classList.remove('bg-white', 'text-int-gray', 'border-gray-200');
+                btnElement.classList.add('bg-int-purple', 'text-white', 'border-int-purple');
+
+                container.dataset.active = secId;
+            }
+        }
+
+        // ============ Slide: Precedentes Arquitectónicos (2.html) ============
+        const towers = {
+            1: {
+                title: 'Torre 1',
+                loc: 'Av. del Deporte 315, Punto Verde, 37298 León, Gto.',
+                levels: 5,
+                link: 'https://maps.app.goo.gl/RRyu5Q2sQFwEFUqg8',
+                img: 'presentacion/1.2-torre-1.png'
+            },
+            2: {
+                title: 'Torre 2',
+                loc: 'Av. del Deporte 309, Punto Verde, 37298 León, Gto.',
+                levels: 5,
+                link: 'https://maps.app.goo.gl/9bPZrxBKN8jZghNL8',
+                img: 'presentacion/1.2-torre-2.png'
+            },
+            3: {
+                title: 'Torre 3',
+                loc: 'Av. del Deporte 205, Punto Verde, 37298 León, Gto.',
+                levels: 5,
+                link: 'https://maps.app.goo.gl/5sPxeYsQaT7y7MdW7',
+                img: 'presentacion/1.2-torre-3.png'
+            },
+            4: {
+                title: 'Torre 4',
+                loc: 'Av. del Deporte 126, Punto Verde, 37298 León, Gto.',
+                levels: 5,
+                link: 'https://maps.app.goo.gl/bcJESy6JyV3aqKzg7',
+                img: 'presentacion/1.2-torre-4.png'
+            },
+            5: {
+                title: 'Torre 5',
+                loc: 'Av. Paseo de las Liebres 261, Barrio de Guadalupe, 37289 León, Gto.',
+                levels: 3,
+                link: 'https://maps.app.goo.gl/NGxGkKWUP8b6ik8g9',
+                img: 'presentacion/1.2-torre-5.png'
+            },
+            6: {
+                title: 'Torre 6',
+                loc: 'Corredores 128, Punto Verde, 37298 León, Gto.',
+                levels: 3,
+                link: 'https://maps.app.goo.gl/QNfSJhKXZ4W1JwUb8',
+                img: 'presentacion/1.2-torre-6.png'
+            },
+            7: {
+                title: 'Torre 7',
+                loc: 'Corredores 101, Punto Verde, 37298 León, Gto.',
+                levels: 3,
+                link: 'https://maps.app.goo.gl/MLMkUMic82F6AmRg8',
+                img: 'presentacion/1.2-torre-7.png'
+            }
+        };
+
+        const panel = document.getElementById('info-panel');
+        const overlay = document.getElementById('map-overlay');
+
+        function openPanel(id, btnElement) {
+            const data = towers[id];
+
+            document.getElementById('panel-title').innerText = data.title;
+            document.getElementById('panel-loc').innerText = data.loc;
+            document.getElementById('panel-levels').innerText = data.levels;
+            document.getElementById('panel-link').href = data.link;
+            document.getElementById('panel-img').src = data.img;
+
+            document.querySelectorAll('.pin').forEach(p => p.classList.remove('active'));
+
+            btnElement.classList.add('active');
+            panel.classList.add('visible');
+            overlay.classList.remove('opacity-0');
+            overlay.classList.add('opacity-100');
+        }
+
+        function closePanel() {
+            document.querySelectorAll('.pin').forEach(p => p.classList.remove('active'));
+            panel.classList.remove('visible');
+            overlay.classList.remove('opacity-100');
+            overlay.classList.add('opacity-0');
+        }
+
+        // ============ Slide: Esquemas de Distribución (4.html) ============
+        function changeLevel(levelId) {
+            document.querySelectorAll('.level-img').forEach(img => {
+                img.classList.replace('opacity-100', 'opacity-0');
+            });
+
+            document.querySelectorAll('.level-card').forEach(card => {
+                card.classList.replace('opacity-100', 'opacity-0');
+                card.classList.add('pointer-events-none');
+            });
+
+            document.querySelectorAll('.nav-pill').forEach(btn => {
+                btn.classList.remove('bg-int-purple', 'text-white', 'shadow-sm');
+                btn.classList.add('text-int-gray', 'hover:bg-gray-100');
+            });
+
+            const activeImg = document.getElementById('img-' + levelId);
+            activeImg.classList.replace('opacity-0', 'opacity-100');
+
+            const activeCard = document.getElementById('card-' + levelId);
+            activeCard.classList.replace('opacity-0', 'opacity-100');
+            activeCard.classList.remove('pointer-events-none');
+
+            const activeBtn = document.getElementById('btn-' + levelId);
+            activeBtn.classList.remove('text-int-gray', 'hover:bg-gray-100');
+            activeBtn.classList.add('bg-int-purple', 'text-white', 'shadow-sm');
+        }
+
+        // ============ Slide: Evolución Volumétrica (5.html) ============
+        function changeVol(volId) {
+            document.querySelectorAll('.vol-card').forEach(card => {
+                card.classList.replace('opacity-100', 'opacity-0');
+                card.classList.add('pointer-events-none');
+            });
+
+            document.querySelectorAll('.vol-img').forEach(img => {
+                img.classList.replace('opacity-100', 'opacity-0');
+            });
+
+            document.querySelectorAll('.vol-pill').forEach(btn => {
+                btn.classList.remove('bg-int-purple', 'text-white', 'shadow-sm');
+                btn.classList.add('text-int-gray', 'hover:bg-gray-200');
+            });
+
+            document.getElementById('iso-' + volId).classList.replace('opacity-0', 'opacity-100');
+
+            const activeCard = document.getElementById('card-' + volId);
+            activeCard.classList.replace('opacity-0', 'opacity-100');
+            activeCard.classList.remove('pointer-events-none');
+
+            const activeBtn = document.getElementById('btn-' + volId);
+            activeBtn.classList.remove('text-int-gray', 'hover:bg-gray-200');
+            activeBtn.classList.add('bg-int-purple', 'text-white', 'shadow-sm');
         }
     </script>
 </body>
