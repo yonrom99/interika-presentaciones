@@ -152,6 +152,87 @@
             pointer-events: auto;
             transform: translateX(0);
         }
+
+        /* ===================================================================== */
+        /* AJUSTES EXCLUSIVOS PARA CELULAR (< 768px). En computadora no aplican. */
+        /* ===================================================================== */
+        @media (max-width: 767px) {
+            /* Alto real visible en celular (evita que la barra del navegador tape contenido) */
+            .slide {
+                height: 100vh; height: 100dvh;
+                width: 100%;
+                overflow-y: auto !important;
+                overflow-x: hidden !important;
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior: contain;
+            }
+            .slide .min-h-screen { min-height: 100%; }
+            button, a { touch-action: manipulation; }
+
+            /* Etiqueta superior derecha: nunca se encima con el logo */
+            .slide > .absolute.right-6.z-20,
+            .slide > .absolute.right-6.z-50 { max-width: 56%; text-align: right; line-height: 1.25; }
+
+            /* Calculadora: 16px evita el zoom automático de iPhone al editar, y barras más fáciles de tocar */
+            .num-input { font-size: 16px !important; }
+            .custom-slider { height: 8px; }
+            .custom-slider::-webkit-slider-thumb { width: 26px; height: 26px; }
+            .custom-slider::-moz-range-thumb { width: 26px; height: 26px; border: 0; border-radius: 50%; background: #636041; }
+
+            /* ---------- Tabla de compatibilidad: cabe completa sin scroll ---------- */
+            .compat-table th, .compat-table td { padding-left: 4px !important; padding-right: 4px !important; }
+            .compat-table td:nth-child(2), .compat-table th:nth-child(2) { padding-left: 8px !important; }
+
+            /* ---------- Precedentes: mapa desplazable con pines alineados ---------- */
+            #map-scroll { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+            #map-scroll::-webkit-scrollbar { display: none; }
+            #map-stage {
+                position: relative !important; inset: auto !important;
+                height: 100%;
+                width: calc((100dvh - 8px) * var(--map-ar, 1.7778));
+                min-width: 100%;
+            }
+            #info-panel {
+                left: 16px !important; right: 16px !important; width: auto !important;
+                top: auto !important; bottom: 84px !important;
+            }
+            #info-panel[data-pos="top"] { top: 72px !important; bottom: auto !important; }
+
+            /* ---------- Cuadro de áreas: tablas apiladas, nada se corta ---------- */
+            #slide-areas .text-2xl { font-size: 1.35rem; line-height: 1.75rem; }
+
+            /* ---------- Esquemas / Volumétrica / Módulo / Resumen: de diseño flotante a flujo vertical ---------- */
+            #slide-esquemas, #slide-volumetrica, #slide-modulo, #slide-resumen { padding: 84px 20px 110px; }
+            .m-title { position: static !important; transform: none !important; order: 1; width: 100%; margin-bottom: 16px; text-align: center; padding: 0 4px; }
+            .m-stage { position: relative !important; inset: auto !important; order: 2; width: 100%; height: auto !important; aspect-ratio: 5 / 4; flex: none; }
+            .m-nav {
+                position: static !important; transform: none !important; order: 3;
+                margin: 16px auto 0 !important; max-width: 100%; overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+            .m-nav button { padding: 8px 12px !important; font-size: 11px !important; white-space: nowrap; }
+            .m-cards {
+                position: relative !important; inset: auto !important; transform: none !important;
+                width: 100% !important; height: auto !important; order: 4; margin-top: 16px; display: grid;
+            }
+            .m-cards > .level-card, .m-cards > .vol-card { position: relative !important; inset: auto !important; grid-area: 1 / 1; }
+            .m-cards > .level-card { padding: 1.5rem; }
+            .m-cards > .vol-card { padding: 1.5rem; }
+            .m-main { position: relative !important; inset: auto !important; order: 2; flex-direction: column; gap: 16px; height: auto; flex: none; }
+            .m-main-left { width: 100% !important; overflow: visible !important; gap: 20px; }
+            .m-main-right { width: 100% !important; height: 260px; flex: none; }
+
+            /* ---------- Presupuesto: la tabla se desliza de lado dentro de su tarjeta ---------- */
+            .presu-card { overflow-x: auto !important; overflow-y: visible !important; -webkit-overflow-scrolling: touch; }
+            .presu-card .presu-head, .presu-card .table-container { min-width: 560px; overflow-y: visible !important; flex: none; }
+
+            /* ---------- Flujo de efectivo: primera columna fija al deslizar ---------- */
+            .sticky-col { position: sticky; left: 0; z-index: 5; padding-left: 12px !important; min-width: 140px !important; box-shadow: 2px 0 0 rgba(0,0,0,0.06); }
+            .sticky-col:not([class*="bg-"]) { background-color: #ffffff; }
+            th.sticky-col.sticky-header { background-color: #f9fafb; }
+            .sticky-col.bg-graf-beige\/90 { background-color: #e9e4d9; }
+            .sticky-col.bg-graf-olive\/10 { background-color: #efefec; }
+        }
     </style>
 </head>
 <body>
@@ -193,9 +274,11 @@
             <img src="presentacion/logo-interika.png" alt="Logo Interika">
         </div>
 
-        <div class="absolute -right-10 -bottom-10 text-[12rem] md:text-[28rem] font-extrabold text-int-light leading-none select-none z-0 tracking-tighter">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+<div class="absolute -right-10 -bottom-10 text-[12rem] md:text-[28rem] font-extrabold text-int-light leading-none select-none z-0 tracking-tighter">
             1.1
         </div>
+</div>
         
         <div class="flex-1 flex flex-col justify-center px-8 md:px-32 z-10 relative mt-20 md:mt-0 min-h-screen py-20">
             <div class="flex items-center gap-4 mb-4 md:mb-6">
@@ -507,8 +590,8 @@
 
             <div class="w-full md:w-2/3 flex flex-col justify-center overflow-hidden">
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-x-auto">
-                    <div class="min-w-[650px]">
-                        <table class="w-full text-sm text-left text-int-dark">
+                    <div class="md:min-w-[650px]">
+                        <table class="w-full text-sm text-left text-int-dark compat-table">
                             <thead class="text-[10px] md:text-xs text-int-gray uppercase bg-int-light border-b border-gray-200">
                                 <tr>
                                     <th scope="col" class="px-3 md:px-4 py-3 md:py-4 text-center w-12 md:w-16">Grupo</th>
@@ -1138,17 +1221,19 @@
 <img alt="Logo Interika" src="presentacion/logo-interika.png"/>
 </div>
 <!-- Número Gigante de Fondo (Marca de Agua) -->
-<div class="absolute -right-10 -bottom-10 text-[28rem] font-extrabold text-int-light leading-none select-none z-0 tracking-tighter">
+<div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+<div class="absolute -right-10 -bottom-10 text-[12rem] md:text-[28rem] font-extrabold text-int-light leading-none select-none z-0 tracking-tighter">
             1.2
         </div>
+</div>
 <!-- Contenido Lateral -->
-<div class="flex-1 flex flex-col justify-center px-32 z-10 relative">
+<div class="flex-1 flex flex-col justify-center px-8 md:px-32 pt-28 pb-24 md:pt-0 md:pb-0 z-10 relative">
 <div class="flex items-center gap-4 mb-6">
 <div class="w-16 h-[2px] bg-int-purple"></div>
 <h3 class="text-int-purple tracking-[0.3em] text-sm font-semibold uppercase">Fase 1.2</h3>
 </div>
-<h1 class="text-6xl font-bold text-int-dark mb-10 tracking-tight">Estudio arquitectónico preliminar</h1>
-<p class="text-xl text-int-gray max-w-2xl leading-relaxed font-light">
+<h1 class="text-[2rem] md:text-6xl font-bold text-int-dark mb-6 md:mb-10 tracking-tight">Estudio arquitectónico preliminar</h1>
+<p class="text-lg md:text-xl text-int-gray max-w-2xl leading-relaxed font-light">
                 Análisis topográfico, zonificación y volumetría esquemática para determinar la capacidad real del predio y el número máximo de unidades/metros rentables.
             </p>
 </div>
@@ -1160,7 +1245,7 @@
 <img alt="Logo Interika" src="presentacion/logo-interika.png"/>
 </div>
 <!-- Título Superior Derecho (Idéntico a las demás) -->
-<div class="absolute top-6 md:top-10 right-6 md:right-10 text-int-gray text-xs md:text-sm bg-white/80 md:bg-transparent px-2 md:px-0 py-1 md:py-0 rounded z-20">01 Topografía y Secciones</div>
+<div class="absolute top-6 md:top-10 right-6 md:right-10 text-int-gray text-xs md:text-sm bg-white/80 md:bg-transparent px-2 md:px-0 py-1 md:py-0 rounded z-20">01 / Topografía y Secciones</div>
 <!-- Contenedor general calcado del index -->
 <div class="flex-1 flex flex-col md:flex-row h-auto min-h-full pt-24 md:pt-32 px-6 md:px-20 pb-28 md:pb-20 gap-8 md:gap-16" data-active="" id="view-container">
 <!-- Columna Izquierda (Textos y Botones) -->
@@ -1198,10 +1283,10 @@
 <div class="slide" id="slide-precedentes">
 <!-- CONTENEDOR RÍGIDO -->
 <div class="flex-1 relative w-full h-full bg-int-light overflow-hidden">
+<div id="map-scroll" class="absolute inset-0">
+<div id="map-stage" class="absolute inset-0">
 <!-- Mapa de Fondo -->
-<img alt="Mapa Base" class="absolute inset-0 w-full h-full object-cover" src="presentacion/1.2-mapa-base.png"/>
-<!-- Capa de oscurecimiento al abrir panel -->
-<div class="absolute inset-0 bg-int-dark/30 backdrop-blur-[2px] opacity-0 transition-opacity duration-300 pointer-events-none z-10" id="map-overlay"></div>
+<img alt="Mapa Base" id="map-base-img" class="absolute inset-0 w-full h-full object-cover" src="presentacion/1.2-mapa-base.png"/>
 <!-- PINES INTERACTIVOS -->
 <div class="pin" onclick="openPanel(1, this)" style="top: 13%; left: 45%;"><i class="ph ph-buildings"></i></div>
 <div class="pin" onclick="openPanel(2, this)" style="top: 15%; left: 50%;"><i class="ph ph-buildings"></i></div>
@@ -1210,16 +1295,21 @@
 <div class="pin" onclick="openPanel(5, this)" style="top: 61%; left: 35%;"><i class="ph ph-buildings"></i></div>
 <div class="pin" onclick="openPanel(6, this)" style="top: 64%; left: 41%;"><i class="ph ph-buildings"></i></div>
 <div class="pin" onclick="openPanel(7, this)" style="top: 74%; left: 32%;"><i class="ph ph-buildings"></i></div>
+</div>
+</div>
+<!-- Capa de oscurecimiento al abrir panel -->
+<div class="absolute inset-0 bg-int-dark/30 backdrop-blur-[2px] opacity-0 transition-opacity duration-300 pointer-events-none z-10" id="map-overlay"></div>
 <!-- CAPA SUPERIOR (UI) -->
 <div class="absolute inset-0 z-50 pointer-events-none">
 <!-- Logo -->
-<div class="absolute top-10 left-10 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-xl shadow-sm border border-gray-100 pointer-events-auto h-12 flex items-center justify-center">
+<div class="absolute top-6 md:top-10 left-6 md:left-10 bg-white/95 backdrop-blur-sm px-3 md:px-4 py-1 md:py-2 rounded-xl shadow-sm border border-gray-100 pointer-events-auto h-10 md:h-12 flex items-center justify-center">
 <img alt="Logo Interika" class="h-full w-auto object-contain" src="presentacion/logo-interika.png"/>
 </div>
 <!-- Título Superior Derecho -->
-<div class="absolute top-10 right-10 text-int-gray text-sm pointer-events-auto bg-white/50 px-2 py-1 rounded backdrop-blur-sm font-medium tracking-wide">
+<div class="absolute top-6 md:top-10 right-6 md:right-10 text-int-gray text-xs md:text-sm pointer-events-auto bg-white/80 md:bg-white/50 px-2 py-1 rounded backdrop-blur-sm font-medium tracking-wide">
                     02 / Precedentes de Zona
                 </div>
+<div class="md:hidden absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm text-int-gray text-[11px] font-medium px-3 py-2 rounded-full shadow-sm border border-gray-100 flex items-center gap-2"><i class="ph ph-arrows-left-right text-sm"></i> Desliza y toca un pin</div>
 <!-- PANEL FLOTANTE DE INFORMACIÓN -->
 <div class="absolute top-28 left-10 w-80 bg-white/95 backdrop-blur-md border border-gray-200 shadow-2xl rounded-2xl overflow-hidden flex flex-col pointer-events-auto" id="info-panel">
 <!-- Botón de Cerrar -->
@@ -1227,14 +1317,14 @@
 <i class="ph ph-x text-sm font-bold"></i>
 </button>
 <!-- Foto del inmueble -->
-<div class="h-44 w-full bg-gray-200 relative">
+<div class="h-24 md:h-44 w-full bg-gray-200 relative">
 <img alt="Torre" class="w-full h-full object-cover" id="panel-img" src=""/>
 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 <h2 class="absolute bottom-4 left-5 text-2xl font-bold text-white tracking-wide" id="panel-title">Torre</h2>
 </div>
 <!-- Datos -->
-<div class="p-5 flex-1 flex flex-col justify-between">
-<div class="space-y-5 mb-6">
+<div class="p-4 md:p-5 flex-1 flex flex-col justify-between">
+<div class="space-y-3 md:space-y-5 mb-3 md:mb-6">
 <div>
 <p class="text-[9px] font-bold text-int-gray uppercase tracking-widest mb-1">Ubicación</p>
 <p class="text-sm font-medium text-int-dark leading-snug" id="panel-loc">Av. del Deporte</p>
@@ -1255,124 +1345,143 @@
 </div>
 
 <div class="slide" id="slide-areas">
-<div class="logo-box">
-<img alt="Logo Interika" src="presentacion/logo-interika.png"/>
-</div>
-<div class="absolute top-10 right-10 text-int-gray text-sm bg-white/80 px-2 py-1 rounded z-20 font-medium tracking-wide">
+        <div class="logo-box">
+            <img alt="Logo Interika" src="presentacion/logo-interika.png"/>
+        </div>
+        
+        <div class="absolute top-6 md:top-10 right-6 md:right-10 text-int-gray text-xs md:text-sm bg-white/80 px-2 py-1 rounded z-20 font-medium tracking-wide">
             03 / Cuadro de Áreas
         </div>
-<!-- Se ajustó el pt-20 y pb-8 para aprovechar al máximo la pantalla sin escrolear -->
-<div class="flex-1 flex flex-col h-full pt-[90px] px-16 pb-8">
-<!-- Encabezado compacto pero con fuente grande -->
-<h1 class="text-3xl font-bold text-int-dark mb-1 text-center tracking-tight">Programa Arquitectónico</h1>
-<p class="text-sm text-int-gray mb-6 text-center font-light">Desglose analítico de superficies vendibles y no vendibles del proyecto.</p>
-<!-- Grid de Áreas: Flexible para llenar el espacio -->
-<div class="flex flex-row gap-6 flex-1 min-h-0">
-<!-- COLUMNA 1: VENDIBLE -->
-<div class="w-5/12 bg-white rounded-2xl shadow-sm border border-gray-200 flex flex-col overflow-hidden h-full">
-<div class="bg-graf-olive/10 px-5 py-3 border-b border-graf-olive/20 flex justify-between items-center">
-<h3 class="font-bold text-int-dark text-base flex items-center gap-2">
-<i class="ph ph-key text-graf-olive text-lg"></i> Zona Privada
+        
+        <div class="flex-1 flex flex-col h-auto md:h-full pt-24 md:pt-[90px] px-5 md:px-16 pb-28 md:pb-8">
+            <h1 class="text-3xl font-bold text-int-dark mb-1 text-center tracking-tight">Programa Arquitectónico</h1>
+            <p class="text-sm text-int-gray mb-6 text-center font-light">Desglose analítico de superficies vendibles y no vendibles del proyecto.</p>
+            
+            <div class="flex flex-col md:flex-row gap-6 flex-1 md:min-h-0">
+                <!-- COLUMNA 1: VENDIBLE -->
+                <div class="w-full md:w-5/12 bg-white rounded-2xl shadow-sm border border-gray-200 flex flex-col overflow-hidden md:h-full">
+                    <div class="bg-graf-olive/10 px-5 py-3 border-b border-graf-olive/20 flex justify-between items-center">
+                        <h3 class="font-bold text-int-dark text-base flex items-center gap-2">
+                            <i class="ph ph-key text-graf-olive text-lg"></i> Zona Privada
                         </h3>
-<span class="bg-graf-olive text-white text-[10px] px-2 py-0.5 rounded font-bold tracking-widest uppercase shadow-sm">Vendible</span>
-</div>
-<div class="p-5 flex-1 flex flex-col justify-between">
-<div>
-<span class="text-xs font-bold text-int-gray uppercase tracking-widest border-b border-gray-100 block pb-1.5 mb-2">Deptos Tipo A</span>
-<ul class="text-sm space-y-1">
-<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Cocina</span> <span class="font-medium text-int-dark">8.40 m²</span></li>
-<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Sala / Comedor</span> <span class="font-medium text-int-dark">13.50 m²</span></li>
-<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Cuarto de Lavado</span> <span class="font-medium text-int-dark">5.00 m²</span></li>
-<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Recámara 1</span> <span class="font-medium text-int-dark">12.00 m²</span></li>
-<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Recámara 2</span> <span class="font-medium text-int-dark">12.00 m²</span></li>
-<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Baño Recámara 1</span> <span class="font-medium text-int-dark">4.16 m²</span></li>
-<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Baño Recámara 2</span> <span class="font-medium text-int-dark">4.16 m²</span></li>
-<li class="flex justify-between py-1.5"><span class="text-int-gray">Vertedero</span> <span class="font-medium text-int-dark">0.50 m²</span></li>
-</ul>
-</div>
-<div class="mt-4 bg-gray-50 p-3 rounded-xl border border-gray-100 flex justify-between items-center">
-<div>
-<p class="text-[10px] text-int-gray uppercase tracking-widest font-semibold mb-0.5">M² Totales / Unidad</p>
-<p class="text-lg font-bold text-int-dark">59.72 m²</p>
-</div>
-<div class="text-right">
-<p class="text-[10px] text-int-gray uppercase tracking-widest font-semibold mb-0.5">Cantidad</p>
-<p class="text-lg font-bold text-int-dark">× 10</p>
-</div>
-</div>
-</div>
-<div class="bg-graf-olive/5 px-5 py-4 border-t border-graf-olive/20 flex justify-between items-center">
-<span class="text-sm font-bold text-int-dark uppercase tracking-wider">Total de Deptos</span>
-<span class="text-xl font-bold text-graf-olive">597.20 m²</span>
-</div>
-</div>
-<!-- COLUMNA 2: NO VENDIBLE -->
-<div class="w-7/12 bg-white rounded-2xl shadow-sm border border-gray-200 flex flex-col overflow-hidden h-full">
-<div class="bg-gray-50 px-5 py-3 border-b border-gray-200 flex justify-between items-center">
-<h3 class="font-bold text-int-dark text-base flex items-center gap-2">
-<i class="ph ph-users-three text-int-gray text-lg"></i> Público y Servicios
+                        <span class="bg-graf-olive text-white text-[10px] px-2 py-0.5 rounded font-bold tracking-widest uppercase shadow-sm">Vendible</span>
+                    </div>
+                    
+                    <div class="p-5 flex-1 flex flex-col">
+                        <!-- DEPARTAMENTOS -->
+                        <div>
+                            <span class="text-xs font-bold text-int-gray uppercase tracking-widest border-b border-gray-100 block pb-1.5 mb-2">Deptos Tipo A</span>
+                            <ul class="text-sm space-y-1">
+                                <li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Cocina</span> <span class="font-medium text-int-dark">8.40 m²</span></li>
+                                <li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Sala / Comedor</span> <span class="font-medium text-int-dark">13.50 m²</span></li>
+                                <li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Cuarto de Lavado</span> <span class="font-medium text-int-dark">5.00 m²</span></li>
+                                <li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Recámara 1</span> <span class="font-medium text-int-dark">12.00 m²</span></li>
+                                <li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Recámara 2</span> <span class="font-medium text-int-dark">12.00 m²</span></li>
+                                <li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Baño Recámara 1</span> <span class="font-medium text-int-dark">4.16 m²</span></li>
+                                <li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Baño Recámara 2</span> <span class="font-medium text-int-dark">4.16 m²</span></li>
+                                <li class="flex justify-between py-1.5"><span class="text-int-gray">Vertedero</span> <span class="font-medium text-int-dark">0.50 m²</span></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mt-2 bg-gray-50 p-3 rounded-xl border border-gray-100 flex justify-between items-center">
+                            <div>
+                                <p class="text-[10px] text-int-gray uppercase tracking-widest font-semibold mb-0.5">M² Totales / Unidad</p>
+                                <p class="text-lg font-bold text-int-dark">59.72 m²</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-[10px] text-int-gray uppercase tracking-widest font-semibold mb-0.5">Cantidad</p>
+                                <p class="text-lg font-bold text-int-dark">× 11</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-2 flex justify-between items-center pt-2">
+                            <span class="text-[10px] font-bold text-int-gray uppercase tracking-widest">Subtotal Deptos</span>
+                            <span class="font-bold text-int-dark text-sm">656.92 m²</span>
+                        </div>
+                        
+                        <!-- CAJONES DE ESTACIONAMIENTO -->
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <span class="text-xs font-bold text-int-gray uppercase tracking-widest border-b border-gray-100 block pb-1.5 mb-2">Estacionamientos</span>
+                            <ul class="text-sm space-y-1">
+                                <li class="flex justify-between py-1.5"><span class="text-int-gray">Cajones de estacionamiento</span> <span class="font-medium text-int-dark">151.90 m²</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-graf-olive/5 px-5 py-4 border-t border-graf-olive/20 flex justify-between items-center mt-auto">
+                        <span class="text-sm font-bold text-int-dark uppercase tracking-wider">Total Zona Privada</span>
+                        <span class="text-xl font-bold text-graf-olive">808.82 m²</span>
+                    </div>
+                </div>
+
+                <!-- COLUMNA 2: NO VENDIBLE -->
+                <div class="w-full md:w-7/12 bg-white rounded-2xl shadow-sm border border-gray-200 flex flex-col overflow-hidden md:h-full">
+                    <div class="bg-gray-50 px-5 py-3 border-b border-gray-200 flex justify-between items-center">
+                        <h3 class="font-bold text-int-dark text-base flex items-center gap-2">
+                            <i class="ph ph-users-three text-int-gray text-lg"></i> Público y Servicios
                         </h3>
-<span class="bg-int-gray text-white text-[10px] px-2 py-0.5 rounded font-bold tracking-widest uppercase shadow-sm">No Vendible</span>
-</div>
-<!-- Dos columnas internas para aprovechar el ancho -->
-<div class="p-5 flex-1 grid grid-cols-2 gap-8 content-start">
-<!-- Lista Público -->
-<div>
-<span class="text-xs font-bold text-int-gray uppercase tracking-widest border-b border-gray-100 block pb-1.5 mb-2">Zona Pública</span>
-<ul class="text-sm space-y-1">
-<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Amenidades (Cowork., Terraza)</span> <span class="font-medium text-int-dark">125.00 m²</span></li>
-<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Estacionamientos y Circ.</span> <span class="font-medium text-int-dark">221.00 m²</span></li>
-<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Áreas Verdes</span> <span class="font-medium text-int-dark">40.00 m²</span></li>
-<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Escaleras</span> <span class="font-medium text-int-dark">40.00 m²</span></li>
-<li class="flex justify-between py-1.5"><span class="text-int-gray">Pasillos</span> <span class="font-medium text-int-dark">90.00 m²</span></li>
-</ul>
-<div class="mt-3 flex justify-between items-center border-t border-gray-200 pt-2">
-<span class="text-[10px] font-bold text-int-gray uppercase tracking-widest">Subtotal Público</span>
-<span class="font-bold text-int-dark text-sm">516.00 m²</span>
-</div>
-</div>
-<!-- Lista Servicios -->
-<div>
-<span class="text-xs font-bold text-int-gray uppercase tracking-widest border-b border-gray-100 block pb-1.5 mb-2">Zona de Servicios</span>
-<ul class="text-sm space-y-1">
-<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Lobby (Sala / Recepción)</span> <span class="font-medium text-int-dark">20.00 m²</span></li>
-<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Baño Lobby</span> <span class="font-medium text-int-dark">4.16 m²</span></li>
-<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Amazon Room</span> <span class="font-medium text-int-dark">3.00 m²</span></li>
-<li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Cuartos Téc. (Máq/Luz/Agua)</span> <span class="font-medium text-int-dark">14.50 m²</span></li>
-<li class="flex justify-between py-1.5"><span class="text-int-gray">Bodegas (Limpieza / Serv.)</span> <span class="font-medium text-int-dark">10.00 m²</span></li>
-</ul>
-<div class="mt-3 flex justify-between items-center border-t border-gray-200 pt-2">
-<span class="text-[10px] font-bold text-int-gray uppercase tracking-widest">Subtotal Servicios</span>
-<span class="font-bold text-int-dark text-sm">51.66 m²</span>
-</div>
-</div>
-</div>
-<div class="bg-gray-50 px-5 py-4 border-t border-gray-200 flex justify-between items-center mt-auto">
-<span class="text-sm font-bold text-int-dark uppercase tracking-wider">Total No Vendible</span>
-<span class="text-xl font-bold text-int-gray">567.66 m²</span>
-</div>
-</div>
-</div>
-<!-- BARRA DE MÉTRICAS (Ubicada exactamente al fondo, sin márgenes excesivos) -->
-<div class="mt-6 bg-int-dark rounded-2xl p-4 shadow-lg text-white grid grid-cols-3 divide-x divide-gray-700 text-center flex-shrink-0">
-<div class="px-4">
-<p class="text-[11px] text-gray-400 uppercase tracking-widest font-semibold mb-0.5">Área Vendible</p>
-<p class="text-2xl font-bold text-graf-olive">597.20 <span class="text-sm font-medium">m²</span></p>
-<p class="text-[10px] text-graf-olive/80 mt-1 font-medium bg-graf-olive/10 inline-block px-2 py-0.5 rounded">51.3% de eficiencia</p>
-</div>
-<div class="px-4">
-<p class="text-[11px] text-gray-400 uppercase tracking-widest font-semibold mb-0.5">Área No Vendible</p>
-<p class="text-2xl font-bold text-int-gray">567.66 <span class="text-sm font-medium">m²</span></p>
-<p class="text-[10px] text-gray-400 mt-1 font-medium bg-white/5 inline-block px-2 py-0.5 rounded">48.7% del proyecto</p>
-</div>
-<div class="px-4">
-<p class="text-[11px] text-gray-400 uppercase tracking-widest font-semibold mb-0.5">Total Construcción</p>
-<p class="text-2xl font-bold text-white">1,164.86 <span class="text-sm font-medium">m²</span></p>
-<p class="text-[10px] text-gray-400 mt-1 font-medium">100%</p>
-</div>
-</div>
-</div>
-</div>
+                        <span class="bg-int-gray text-white text-[10px] px-2 py-0.5 rounded font-bold tracking-widest uppercase shadow-sm">No Vendible</span>
+                    </div>
+                    
+                    <div class="p-5 flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 content-start">
+                        <!-- ZONA PÚBLICA -->
+                        <div>
+                            <span class="text-xs font-bold text-int-gray uppercase tracking-widest border-b border-gray-100 block pb-1.5 mb-2">Zona Pública</span>
+                            <ul class="text-sm space-y-1">
+                                <li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Circulaciones</span> <span class="font-medium text-int-dark">109.08 m²</span></li>
+                                <li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Jardines</span> <span class="font-medium text-int-dark">56.90 m²</span></li>
+                                <li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Lobby</span> <span class="font-medium text-int-dark">20.30 m²</span></li>
+                                <li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Escaleras</span> <span class="font-medium text-int-dark">44.25 m²</span></li>
+                                <li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Amenidades</span> <span class="font-medium text-int-dark">60.00 m²</span></li>
+                                <li class="flex justify-between py-1.5"><span class="text-int-gray">Pasillos</span> <span class="font-medium text-int-dark">66.69 m²</span></li>
+                            </ul>
+                            <div class="mt-3 flex justify-between items-center border-t border-gray-200 pt-2">
+                                <span class="text-[10px] font-bold text-int-gray uppercase tracking-widest">Subtotal Público</span>
+                                <span class="font-bold text-int-dark text-sm">357.22 m²</span>
+                            </div>
+                        </div>
+                        
+                        <!-- ZONA DE SERVICIOS -->
+                        <div>
+                            <span class="text-xs font-bold text-int-gray uppercase tracking-widest border-b border-gray-100 block pb-1.5 mb-2">Zona de Servicios</span>
+                            <ul class="text-sm space-y-1">
+                                <li class="flex justify-between py-1.5 border-b border-gray-50"><span class="text-int-gray">Servicios</span> <span class="font-medium text-int-dark">9.33 m²</span></li>
+                                <li class="flex justify-between py-1.5"><span class="text-int-gray">Baños</span> <span class="font-medium text-int-dark">5.91 m²</span></li>
+                            </ul>
+                            <div class="mt-3 flex justify-between items-center border-t border-gray-200 pt-2">
+                                <span class="text-[10px] font-bold text-int-gray uppercase tracking-widest">Subtotal Servicios</span>
+                                <span class="font-bold text-int-dark text-sm">15.24 m²</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-50 px-5 py-4 border-t border-gray-200 flex justify-between items-center mt-auto">
+                        <span class="text-sm font-bold text-int-dark uppercase tracking-wider">Total No Vendible</span>
+                        <span class="text-xl font-bold text-int-gray">372.46 m²</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- BARRA DE MÉTRICAS -->
+            <div class="mt-6 bg-int-dark rounded-2xl p-4 shadow-lg text-white grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-700 text-center flex-shrink-0">
+                <div class="px-4 py-3 md:py-0">
+                    <p class="text-[11px] text-gray-400 uppercase tracking-widest font-semibold mb-0.5">Área Vendible</p>
+                    <p class="text-2xl font-bold text-graf-olive">808.82 <span class="text-sm font-medium">m²</span></p>
+                    <p class="text-[10px] text-graf-olive/80 mt-1 font-medium bg-graf-olive/10 inline-block px-2 py-0.5 rounded">68.5% de eficiencia</p>
+                </div>
+                <div class="px-4 py-3 md:py-0">
+                    <p class="text-[11px] text-gray-400 uppercase tracking-widest font-semibold mb-0.5">Área No Vendible</p>
+                    <p class="text-2xl font-bold text-int-gray">372.46 <span class="text-sm font-medium">m²</span></p>
+                    <p class="text-[10px] text-gray-400 mt-1 font-medium bg-white/5 inline-block px-2 py-0.5 rounded">31.5% del proyecto</p>
+                </div>
+                <div class="px-4 py-3 md:py-0">
+                    <p class="text-[11px] text-gray-400 uppercase tracking-widest font-semibold mb-0.5">Total Construcción</p>
+                    <p class="text-2xl font-bold text-white">1,181.28 <span class="text-sm font-medium">m²</span></p>
+                    <p class="text-[10px] text-gray-400 mt-1 font-medium">100%</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <div class="slide bg-white" id="slide-esquemas">
 <!-- Logo -->
@@ -1380,24 +1489,24 @@
 <img alt="Logo Interika" src="presentacion/logo-interika.png"/>
 </div>
 <!-- Título Superior Derecho -->
-<div class="absolute top-10 right-10 text-int-gray text-xs md:text-sm bg-white/80 px-4 py-2 rounded-lg z-50 font-medium tracking-wide">
+<div class="absolute top-6 md:top-10 right-6 md:right-10 text-int-gray text-xs md:text-sm bg-white/80 px-2 md:px-4 py-1 md:py-2 rounded-lg z-50 font-medium tracking-wide">
             04 / Esquemas de Distribución
         </div>
 <!-- TÍTULO PRINCIPAL (Centrado arriba, libre de empalmes) -->
-<div class="absolute top-10 w-full flex flex-col items-center z-20 pointer-events-none">
+<div class="absolute top-10 w-full flex flex-col items-center z-20 pointer-events-none m-title">
 <h1 class="text-3xl md:text-4xl font-bold text-int-dark mb-1 tracking-tight">Zonificación por Niveles</h1>
 <p class="text-sm text-int-gray font-light">Análisis de uso y distribución espacial del proyecto.</p>
 </div>
 <!-- CONTENEDOR DE IMÁGENES RESTRINGIDO -->
 <!-- top-[140px] asegura que el plano baje y no toque el título. bottom-[100px] lo separa de los botones -->
-<div class="absolute top-[140px] bottom-[100px] left-[380px] right-10 flex items-center justify-center z-10 pointer-events-none">
+<div class="absolute top-[140px] bottom-[100px] left-[380px] right-10 flex items-center justify-center z-10 pointer-events-none m-stage">
 <img class="level-img absolute w-full h-full object-contain transition-opacity duration-500 opacity-100" id="img-pb" src="presentacion/planta-baja.png"/>
 <img class="level-img absolute w-full h-full object-contain transition-opacity duration-500 opacity-0" id="img-n1" src="presentacion/nivel-1.png"/>
 <img class="level-img absolute w-full h-full object-contain transition-opacity duration-500 opacity-0" id="img-n2" src="presentacion/nivel-2.png"/>
 <img class="level-img absolute w-full h-full object-contain transition-opacity duration-500 opacity-0" id="img-n3" src="presentacion/nivel-3.png"/>
 </div>
 <!-- TARJETAS FLOTANTES DE INFORMACIÓN -->
-<div class="absolute top-1/2 transform -translate-y-1/2 left-10 md:left-12 z-40 w-[300px] md:w-[320px] h-[480px]">
+<div class="absolute top-1/2 transform -translate-y-1/2 left-10 md:left-12 z-40 w-[300px] md:w-[320px] h-[480px] m-cards">
 <!-- Tarjeta PB -->
 <div class="level-card absolute inset-0 bg-white rounded-[2rem] shadow-xl p-8 transition-opacity duration-500 opacity-100 flex flex-col justify-center" id="card-pb">
 <h2 class="text-2xl md:text-3xl font-bold text-int-dark mb-1">Planta Baja</h2>
@@ -1409,7 +1518,7 @@
 </div>
 <div>
 <p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-1"><i class="ph ph-bounding-box text-int-gray text-sm"></i> Área Utilizada</p>
-<p class="text-sm font-bold text-int-dark">59.00 m²</p>
+<p class="text-sm font-bold text-int-dark">45.98 m²</p>
 </div>
 <div>
 <p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-3"><i class="ph ph-list-dashes text-int-gray text-sm"></i> Espacios</p>
@@ -1434,7 +1543,7 @@
 </div>
 <div>
 <p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-1"><i class="ph ph-bounding-box text-int-gray text-sm"></i> Área Utilizada</p>
-<p class="text-sm font-bold text-int-dark">268.73 m²</p>
+<p class="text-sm font-bold text-int-dark">276.73 m²</p>
 </div>
 <div>
 <p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-3"><i class="ph ph-list-dashes text-int-gray text-sm"></i> Espacios</p>
@@ -1457,7 +1566,7 @@
 </div>
 <div>
 <p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-1"><i class="ph ph-bounding-box text-int-gray text-sm"></i> Área Utilizada</p>
-<p class="text-sm font-bold text-int-dark">268.73 m²</p>
+<p class="text-sm font-bold text-int-dark">276.73 m²</p>
 </div>
 <div>
 <p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-3"><i class="ph ph-list-dashes text-int-gray text-sm"></i> Espacios</p>
@@ -1480,14 +1589,13 @@
 </div>
 <div>
 <p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-1"><i class="ph ph-bounding-box text-int-gray text-sm"></i> Área Utilizada</p>
-<p class="text-sm font-bold text-int-dark">268.73 m²</p>
+<p class="text-sm font-bold text-int-dark">276.73 m²</p>
 </div>
 <div>
 <p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-3"><i class="ph ph-list-dashes text-int-gray text-sm"></i> Espacios</p>
 <ul class="text-[11px] text-int-gray font-medium leading-relaxed space-y-1.5">
-<li>• Departamentos (2 unidades)</li>
-<li>• Terraza Exterior</li>
-<li>• Área de Coworking</li>
+<li>• Departamentos (3 unidades)</li>
+<li>• Terraza Exterior y Coworking</li>
 <li>• Escaleras y Pasillos</li>
 </ul>
 </div>
@@ -1495,7 +1603,7 @@
 </div>
 </div>
 <!-- NAVEGADOR INFERIOR TIPO PÍLDORA -->
-<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-50 bg-white rounded-full shadow-md p-1.5 flex gap-1 items-center pointer-events-auto border border-gray-100">
+<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-50 bg-white rounded-full shadow-md p-1.5 flex gap-1 items-center pointer-events-auto border border-gray-100 m-nav">
 <button class="nav-pill px-6 py-2.5 rounded-full text-xs font-bold transition-all duration-300 bg-int-purple text-white shadow-sm" id="btn-pb" onclick="changeLevel('pb')">
                 Planta Baja
             </button>
@@ -1515,22 +1623,22 @@
 <div class="logo-box">
 <img alt="Logo Interika" src="presentacion/logo-interika.png"/>
 </div>
-<div class="absolute top-12 right-12 text-int-gray text-sm font-medium tracking-wide z-50">
+<div class="absolute top-6 md:top-12 right-6 md:right-12 text-int-gray text-xs md:text-sm font-medium tracking-wide z-50 bg-white/80 md:bg-transparent px-2 md:px-0 py-1 md:py-0 rounded">
             05 / Evolución Volumétrica
         </div>
-<div class="absolute top-10 w-full flex flex-col items-center z-20 pointer-events-none">
+<div class="absolute top-10 w-full flex flex-col items-center z-20 pointer-events-none m-title">
 <h1 class="text-3xl md:text-4xl font-bold text-int-dark mb-1 tracking-tight">Crecimiento del Proyecto</h1>
 <p class="text-sm text-int-gray font-light">Desarrollo por etapas de la torre residencial.</p>
 </div>
 <!-- CONTENEDOR DE IMÁGENES (Isométricos) -->
-<div class="absolute top-[120px] bottom-[100px] left-[380px] right-10 flex items-center justify-center z-10 pointer-events-none">
+<div class="absolute top-[120px] bottom-[100px] left-[380px] right-10 flex items-center justify-center z-10 pointer-events-none m-stage">
 <img class="vol-img absolute w-full h-full object-contain transition-opacity duration-500 opacity-100" id="iso-f1" src="presentacion/ISO 1.png"/>
 <img class="vol-img absolute w-full h-full object-contain transition-opacity duration-500 opacity-0" id="iso-f2" src="presentacion/ISO 2.png"/>
 <img class="vol-img absolute w-full h-full object-contain transition-opacity duration-500 opacity-0" id="iso-f3" src="presentacion/ISO 3.png"/>
 <img class="vol-img absolute w-full h-full object-contain transition-opacity duration-500 opacity-0" id="iso-f4" src="presentacion/ISO 4.png"/>
 </div>
 <!-- TARJETAS FLOTANTES DE INFORMACIÓN -->
-<div class="absolute top-1/2 transform -translate-y-1/2 left-10 md:left-12 z-40 w-[300px] md:w-[320px] h-[440px]">
+<div class="absolute top-1/2 transform -translate-y-1/2 left-10 md:left-12 z-40 w-[300px] md:w-[320px] h-[440px] m-cards">
 <!-- Fase 1 -->
 <div class="vol-card absolute inset-0 bg-[#FAFAFA] rounded-[2rem] border border-gray-100 shadow-sm p-8 transition-opacity duration-500 opacity-100 flex flex-col justify-center" id="card-f1">
 <h2 class="text-2xl md:text-3xl font-bold text-int-dark mb-1">Fase 1</h2>
@@ -1601,9 +1709,8 @@
 <div>
 <p class="text-[9px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-3"><i class="ph ph-list-dashes text-int-gray text-sm"></i> Elementos</p>
 <ul class="text-[11px] text-int-gray font-medium leading-relaxed space-y-1.5">
-<li>• Construcción de 2 Departamentos Tipo A</li>
-<li>• Terraza exterior panorámica</li>
-<li>• Área de Coworking (Uso Público)</li>
+<li>• Construcción de 3 Departamentos Tipo A</li>
+<li>• Terraza exterior panorámica y Área de coworking</li>
 <li>• Finalización del núcleo de escaleras</li>
 </ul>
 </div>
@@ -1611,7 +1718,7 @@
 </div>
 </div>
 <!-- NAVEGADOR INFERIOR TIPO PÍLDORA -->
-<div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-50 bg-[#FAFAFA] rounded-full shadow-sm border border-gray-100 p-1.5 flex gap-1 items-center pointer-events-auto">
+<div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-50 bg-[#FAFAFA] rounded-full shadow-sm border border-gray-100 p-1.5 flex gap-1 items-center pointer-events-auto m-nav">
 <button class="vol-pill px-6 py-2.5 rounded-full text-xs font-bold transition-all duration-300 bg-int-purple text-white shadow-sm" id="btn-f1" onclick="changeVol('f1')">
                 Fase 01
             </button>
@@ -1631,19 +1738,19 @@
 <div class="logo-box">
 <img alt="Logo Interika" src="presentacion/logo-interika.png"/>
 </div>
-<div class="absolute top-12 right-12 text-int-gray text-sm font-medium tracking-wide z-50">
+<div class="absolute top-6 md:top-12 right-6 md:right-12 text-int-gray text-xs md:text-sm font-medium tracking-wide z-50 bg-white/80 md:bg-transparent px-2 md:px-0 py-1 md:py-0 rounded">
             06 / Módulo Residencial
         </div>
-<div class="absolute top-10 w-full flex flex-col items-center z-20 pointer-events-none">
+<div class="absolute top-10 w-full flex flex-col items-center z-20 pointer-events-none m-title">
 <h1 class="text-3xl md:text-4xl font-bold text-int-dark mb-1 tracking-tight">Distribución Interior</h1>
 <p class="text-sm text-int-gray font-light">Análisis espacial del Departamento Tipo A.</p>
 </div>
 <!-- El isométrico del departamento -->
-<div class="absolute top-[120px] bottom-[40px] left-[380px] right-10 flex items-center justify-center z-10 pointer-events-none">
-<img class="w-full h-full object-contain p-8" src="presentacion/ISO DEPA.png"/>
+<div class="absolute top-[120px] bottom-[40px] left-[380px] right-10 flex items-center justify-center z-10 pointer-events-none m-stage">
+<img class="w-full h-full object-contain p-2 md:p-8" src="presentacion/ISO DEPA.png"/>
 </div>
 <!-- Tarjeta de Desglose de Áreas -->
-<div class="absolute top-1/2 transform -translate-y-1/2 left-10 md:left-12 z-40 w-[300px] md:w-[320px] h-auto">
+<div class="absolute top-1/2 transform -translate-y-1/2 left-10 md:left-12 z-40 w-[300px] md:w-[320px] h-auto m-cards">
 <div class="bg-[#FAFAFA] rounded-[2rem] border border-gray-100 shadow-sm p-8 flex flex-col justify-center">
 <h2 class="text-2xl md:text-3xl font-bold text-int-dark mb-1">Depto Tipo A</h2>
 <p class="text-[10px] text-int-gray mb-8 uppercase tracking-widest font-bold">Unidad Base</p>
@@ -1676,18 +1783,18 @@
 <img alt="Logo Interika" src="presentacion/logo-interika.png"/>
 </div>
 <!-- Texto limpio en la esquina sin recuadro -->
-<div class="absolute top-12 right-12 text-int-gray text-sm font-medium tracking-wide z-50">
+<div class="absolute top-6 md:top-12 right-6 md:right-12 text-int-gray text-xs md:text-sm font-medium tracking-wide z-50 bg-white/80 md:bg-transparent px-2 md:px-0 py-1 md:py-0 rounded">
             07 / Resumen del Proyecto
         </div>
 <!-- Título -->
-<div class="absolute top-10 w-full flex flex-col items-center z-20 pointer-events-none">
+<div class="absolute top-10 w-full flex flex-col items-center z-20 pointer-events-none m-title">
 <h1 class="text-3xl md:text-4xl font-bold text-int-dark mb-1 tracking-tight">Síntesis General</h1>
 <p class="text-sm text-int-gray font-light">Resumen de capacidades, superficies y recorrido visual.</p>
 </div>
 <!-- Contenedor Principal Dividido -->
-<div class="absolute top-[120px] bottom-[50px] left-12 right-12 flex gap-8 z-10">
+<div class="absolute top-[120px] bottom-[50px] left-12 right-12 flex gap-8 z-10 m-main">
 <!-- COLUMNA IZQUIERDA: RESUMEN DE DATOS -->
-<div class="w-5/12 bg-[#FAFAFA] rounded-[2rem] border border-gray-100 shadow-sm p-8 flex flex-col justify-between overflow-y-auto">
+<div class="w-5/12 bg-[#FAFAFA] rounded-[2rem] border border-gray-100 shadow-sm p-5 md:p-8 flex flex-col justify-between overflow-y-auto m-main-left">
 <div>
 <!-- Capacidad y Terreno -->
 <div class="mb-5">
@@ -1695,18 +1802,18 @@
 <ul class="text-[11px] text-int-gray font-medium space-y-2">
 <li class="flex justify-between"><span>Topografía</span> <strong class="text-int-dark text-right">Terreno plano (Pendiente 25cm)</strong></li>
 <li class="flex justify-between"><span>Niveles</span> <strong class="text-int-dark">4 Niveles (Desde 0.00)</strong></li>
-<li class="flex justify-between"><span>Unidades</span> <strong class="text-int-dark">10 Deptos. de 60 m²</strong></li>
-<li class="flex justify-between"><span>Estacionamiento</span> <strong class="text-int-dark">10 Cajones</strong></li>
+<li class="flex justify-between"><span>Unidades</span> <strong class="text-int-dark">11 Deptos. de 60 m²</strong></li>
+<li class="flex justify-between"><span>Estacionamiento</span> <strong class="text-int-dark">11 Cajones</strong></li>
 </ul>
 </div>
 <!-- Huella por Nivel -->
 <div class="mb-5">
 <p class="text-[10px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-1.5 mb-3 border-b border-gray-200 pb-1.5"><i class="ph ph-stack text-sm"></i> Área Utilizada por Nivel</p>
 <ul class="text-[11px] text-int-gray font-medium space-y-2">
-<li class="flex justify-between"><span>Planta Baja</span> <strong class="text-int-dark">59.00 m²</strong></li>
-<li class="flex justify-between"><span>Nivel 01</span> <strong class="text-int-dark">268.73 m²</strong></li>
-<li class="flex justify-between"><span>Nivel 02</span> <strong class="text-int-dark">268.73 m²</strong></li>
-<li class="flex justify-between"><span>Nivel 03</span> <strong class="text-int-dark">268.73 m²</strong></li>
+<li class="flex justify-between"><span>Planta Baja</span> <strong class="text-int-dark">45.98 m²</strong></li>
+<li class="flex justify-between"><span>Nivel 01</span> <strong class="text-int-dark">276.73 m²</strong></li>
+<li class="flex justify-between"><span>Nivel 02</span> <strong class="text-int-dark">276.73 m²</strong></li>
+<li class="flex justify-between"><span>Nivel 03</span> <strong class="text-int-dark">276.73 m²</strong></li>
 </ul>
 </div>
 </div>
@@ -1715,24 +1822,663 @@
 <div class="grid grid-cols-2 gap-3 mb-4">
 <div class="bg-white border border-gray-200 p-3.5 rounded-xl shadow-sm">
 <span class="text-[9px] text-int-gray uppercase tracking-widest font-bold block mb-1">Área Vendible</span>
-<span class="text-xl font-bold text-graf-olive">597.20 m²</span>
+<span class="text-xl font-bold text-graf-olive">808.82 m²</span>
 </div>
 <div class="bg-white border border-gray-200 p-3.5 rounded-xl shadow-sm">
 <span class="text-[9px] text-int-gray uppercase tracking-widest font-bold block mb-1">Área No Vendible</span>
-<span class="text-xl font-bold text-int-gray">567.66 m²</span>
+<span class="text-xl font-bold text-int-gray">372.46 m²</span>
 </div>
 </div>
 <div class="bg-int-purple text-white p-4 rounded-xl flex justify-between items-center shadow-md">
 <span class="text-[10px] uppercase tracking-widest font-bold text-white/80">Área Total de Construcción</span>
-<span class="text-2xl font-bold">1,164.86 m²</span>
+<span class="text-2xl font-bold">1,181.28 m²</span>
 </div>
 </div>
 </div>
 <!-- COLUMNA DERECHA: REPRODUCTOR DE VIDEO BUCLE -->
-<div class="w-7/12 rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm bg-[#FAFAFA] relative">
+<div class="w-7/12 rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm bg-[#FAFAFA] relative m-main-right">
 <img src="presentacion/PV.gif" alt="Animación PV" class="absolute inset-0 w-full h-full object-cover"/>
 </div>
 </div>
+</div>
+
+    <!-- ============================================================= -->
+    <!-- FASE 1.3 — Análisis Financiero Preliminar -->
+    <!-- ============================================================= -->
+
+<div class="slide" id="slide-portada-f13">
+        <div class="logo-box">
+            <img src="presentacion/logo-interika.png" alt="Logo Interika">
+        </div>
+        
+        <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+<div class="absolute -right-10 -bottom-10 text-[12rem] md:text-[28rem] font-extrabold text-int-light leading-none select-none z-0 tracking-tighter">
+            1.3
+        </div>
+</div>
+        
+        <div class="flex-1 flex flex-col justify-center px-8 md:px-32 pt-28 pb-24 md:pt-0 md:pb-0 z-10 relative">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-16 h-[2px] bg-int-purple"></div>
+                <h3 class="text-int-purple tracking-[0.3em] text-sm font-semibold uppercase">Fase 1.3</h3>
+            </div>
+            
+            <h1 class="text-[2rem] md:text-6xl font-bold text-int-dark mb-6 md:mb-10 tracking-tight">Análisis Financiero Preliminar</h1>
+            
+            <p class="text-lg md:text-xl text-int-gray max-w-2xl leading-relaxed font-light">
+                Estimación de costos paramétricos de construcción y estructuración del modelo de negocio para proyectar requerimientos de capital y retorno inicial.
+            </p>
+        </div>
+    </div>
+
+<div class="slide" id="slide-presupuesto">
+        <div class="logo-box"><img src="presentacion/logo-interika.png" alt="Logo Interika"></div>
+        <div class="absolute top-6 md:top-10 right-6 md:right-10 text-int-gray text-xs md:text-sm bg-white/80 px-2 py-1 rounded z-20 font-medium tracking-wide">01 / Presupuesto Paramétrico</div>
+        
+        <div class="flex-1 flex flex-col h-auto md:h-full pt-24 md:pt-[100px] px-5 md:px-16 pb-28 md:pb-12">
+            <h1 class="text-3xl font-bold text-int-dark mb-1 text-center tracking-tight">Presupuesto Paramétrico</h1>
+            <p class="text-sm text-int-gray mb-8 text-center font-light">Desglose de costos de preconstrucción, construcción, indirectos y terreno.</p>
+            
+            <p class="md:hidden text-[10px] text-graf-olive font-bold text-center uppercase tracking-widest -mt-5 mb-4 flex justify-center items-center gap-1.5"><i class="ph ph-arrows-left-right text-sm"></i> Desliza la tabla para ver los importes</p>
+            <div class="flex flex-col md:flex-row flex-1 gap-6 md:gap-8 md:overflow-hidden">
+                <!-- COLUMNA IZQ: Tabla Desplazable -->
+                <div class="w-full md:w-8/12 bg-white border border-gray-200 rounded-2xl shadow-sm flex flex-col overflow-hidden presu-card">
+                    <div class="bg-int-light px-6 py-4 border-b border-gray-200 flex justify-between font-bold text-xs uppercase tracking-widest text-int-gray presu-head">
+                        <span class="w-1/2">Categoría / Partida</span>
+                        <span class="w-1/4 text-right">Importe</span>
+                        <span class="w-1/4 text-right">Acumulado</span>
+                    </div>
+                    
+                    <div class="table-container flex-1 overflow-y-auto px-6 py-2">
+                        <!-- PRECONSTRUCCIÓN -->
+                        <div class="py-3 border-b border-gray-100">
+                            <h3 class="font-bold text-int-dark text-sm mb-2 flex items-center gap-2"><i class="ph ph-blueprint text-graf-olive text-lg"></i> Preconstrucción</h3>
+                            <div class="space-y-1.5 text-xs text-int-gray">
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">Levantamiento topográfico</span><span class="w-1/4 text-right">$6,500.00</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">Mecánica de Suelos</span><span class="w-1/4 text-right">$25,000.00</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">Proyecto Arquitectónico</span><span class="w-1/4 text-right">$139,840.00</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">Cálculo estructural</span><span class="w-1/4 text-right">$87,400.00</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">Proyecto Hidrosanitario</span><span class="w-1/4 text-right">$41,952.00</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">Proyecto Eléctrico</span><span class="w-1/4 text-right">$41,952.00</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">Proyecto de especialidades</span><span class="w-1/4 text-right">$17,480.00</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">Firma DRO proyecto</span><span class="w-1/4 text-right">$35,000.00</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between font-bold text-int-dark mt-2 pt-1 border-t border-gray-50"><span class="w-1/2 pl-2">Subtotal Preconstrucción</span><span class="w-1/4 text-right">$395,124.00</span><span class="w-1/4 text-right text-graf-olive">$395,124.00</span></div>
+                            </div>
+                        </div>
+
+                        <!-- CONSTRUCCIÓN -->
+                        <div class="py-3 border-b border-gray-100">
+                            <h3 class="font-bold text-int-dark text-sm mb-2 flex items-center gap-2"><i class="ph ph-crane text-graf-olive text-lg"></i> Construcción</h3>
+                            <div class="space-y-1.5 text-xs text-int-gray">
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">1.0 Preliminares</span><span class="w-1/4 text-right">$56,103.42</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">2.0 Cimentación (y Cisterna)</span><span class="w-1/4 text-right">$839,026.77</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">3.0 Estructura</span><span class="w-1/4 text-right">$3,073,021.60</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">4.0 Albañilería</span><span class="w-1/4 text-right">$1,839,923.52</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">5.0 Impermeabilización</span><span class="w-1/4 text-right">$168,436.39</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">6.0 Instalaciones (Hidro, San, Pluv, Eléctrica)</span><span class="w-1/4 text-right">$1,504,660.80</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">7.0 Instalaciones Especiales</span><span class="w-1/4 text-right">$322,219.93</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">8.0 Acabados</span><span class="w-1/4 text-right">$2,177,599.98</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">9.0 Cancelería</span><span class="w-1/4 text-right">$703,195.56</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">10. Herrería</span><span class="w-1/4 text-right">$115,866.84</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">11. Carpintería</span><span class="w-1/4 text-right">$1,325,400.00</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">12. Cubiertas</span><span class="w-1/4 text-right">$250,255.76</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">13. Mobiliario</span><span class="w-1/4 text-right">$541,915.94</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">14. Equipamiento</span><span class="w-1/4 text-right">$156,763.88</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">15. Obra Exterior</span><span class="w-1/4 text-right">$53,435.34</span><span class="w-1/4 text-right"></span></div>
+                                <div class="flex justify-between font-bold text-int-dark mt-2 pt-1 border-t border-gray-50"><span class="w-1/2 pl-2">Subtotal Construcción</span><span class="w-1/4 text-right">$13,137,826.15</span><span class="w-1/4 text-right text-graf-olive">$13,532,950.15</span></div>
+                            </div>
+                        </div>
+
+                        <!-- IMPREVISTOS Y OTROS -->
+                        <div class="py-3 border-b border-gray-100">
+                            <h3 class="font-bold text-int-dark text-sm mb-2 flex items-center gap-2"><i class="ph ph-calculator text-graf-olive text-lg"></i> Otros Gastos e Indirectos</h3>
+                            <div class="space-y-1.5 text-xs text-int-gray">
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">Imprevistos (3%)</span><span class="w-1/4 text-right">$405,988.50</span><span class="w-1/4 text-right text-graf-olive">$13,938,938.65</span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">Indirectos (10.22%)</span><span class="w-1/4 text-right">$1,363,988.10</span><span class="w-1/4 text-right text-graf-olive">$15,302,926.76</span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">Utilidad del Constructor (12%)</span><span class="w-1/4 text-right">$1,835,351.21</span><span class="w-1/4 text-right text-graf-olive">$17,138,277.96</span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">Gastos legales y notariales</span><span class="w-1/4 text-right">$90,000.00</span><span class="w-1/4 text-right text-graf-olive">$17,228,277.96</span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">Gastos de venta</span><span class="w-1/4 text-right">$1,300,000.00</span><span class="w-1/4 text-right text-graf-olive">$18,528,277.96</span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">IVA (16%)</span><span class="w-1/4 text-right">$2,964,684.47</span><span class="w-1/4 text-right text-graf-olive">$21,493,962.44</span></div>
+                                <div class="flex justify-between"><span class="w-1/2 pl-6">Terreno</span><span class="w-1/4 text-right">$2,550,000.00</span><span class="w-1/4 text-right text-graf-olive"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMNA DER: Totalizadores -->
+                <div class="w-full md:w-4/12 flex flex-col justify-end pb-4">
+                    <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm mb-6">
+                        <p class="text-xs font-bold text-int-gray uppercase tracking-widest mb-4">Resumen Estructural</p>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-xs text-int-gray mb-1"><span>Costo Directo</span><span>$13,532,950.15</span></div>
+                                <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="bg-graf-olive h-1.5 rounded-full" style="width: 56%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs text-int-gray mb-1"><span>Indirectos e Imprevistos</span><span>$1,769,976.60</span></div>
+                                <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="bg-graf-sage h-1.5 rounded-full" style="width: 10%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs text-int-gray mb-1"><span>Otros y Terreno</span><span>$8,741,035.68</span></div>
+                                <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="bg-int-purple h-1.5 rounded-full" style="width: 34%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-int-dark text-white rounded-2xl p-6 shadow-lg">
+                        <p class="text-[11px] text-gray-400 uppercase tracking-widest font-semibold mb-1">Presupuesto Paramétrico Total</p>
+                        <p class="text-3xl md:text-4xl font-bold tracking-tight text-white">$24,043,962<span class="text-xl font-medium text-gray-400">.44</span></p>
+                        <div class="mt-4 pt-4 border-t border-gray-700/50 flex flex-wrap gap-x-4 gap-y-1 justify-between text-xs text-gray-300">
+                            <span>M² Construcción: 1,181.28 m²</span>
+                            <span class="font-bold text-graf-olive">Costo/m²: $20,354</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="slide" id="slide-resultados">
+        <div class="logo-box"><img src="presentacion/logo-interika.png" alt="Logo Interika"></div>
+        <div class="absolute top-6 md:top-8 right-6 md:right-10 text-int-gray text-xs md:text-sm bg-white/80 px-2 py-1 rounded z-20 font-medium tracking-wide">02 / Estado de Resultados</div>
+        
+        <!-- Reduje el padding superior de pt-[100px] a pt-[70px] y el inferior a pb-6 -->
+        <div class="flex-1 flex flex-col h-auto md:h-full pt-24 md:pt-[70px] px-5 md:px-16 pb-28 md:pb-6">
+            <h1 class="text-3xl font-bold text-int-dark mb-1 text-center tracking-tight">Estado de Resultados Proforma</h1>
+            <p class="text-sm text-int-gray mb-4 text-center font-light">Proyección financiera de ingresos por ventas vs. egresos totales.</p>
+            
+            <div class="flex flex-col md:flex-row flex-1 gap-6 md:min-h-0">
+                <!-- COLUMNA IZQ: Tabla de Resultados -->
+                <div class="w-full md:w-8/12 flex flex-col md:h-full md:min-h-0">
+                    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm md:flex-1 p-4 md:p-5 flex flex-col md:min-h-0 md:overflow-y-auto">
+                        
+                        <!-- INGRESOS -->
+                        <div class="mb-3">
+                            <div class="bg-gray-100 px-2 md:px-4 py-1.5 rounded-t-lg flex justify-between font-bold text-[10px] uppercase tracking-widest text-int-dark">
+                                <span class="w-1/2">Ingresos</span>
+                                <span class="w-1/4 text-right">Monto</span>
+                                <span class="w-1/4 text-right">%</span>
+                            </div>
+                            <div class="px-2 md:px-4 py-1.5 space-y-1 text-[10px] md:text-[11px] text-int-gray border border-t-0 border-gray-100 rounded-b-lg">
+                                <div class="flex justify-between"><span class="w-1/2">Ingreso Preventas Depto</span><span class="w-1/4 text-right">$8,745,000</span><span class="w-1/4 text-right">30%</span></div>
+                                <div class="flex justify-between"><span class="w-1/2">Ingreso Ventas Depto</span><span class="w-1/4 text-right">$14,575,000</span><span class="w-1/4 text-right">50%</span></div>
+                                <div class="flex justify-between"><span class="w-1/2">Ingreso Preventas Com</span><span class="w-1/4 text-right">$5,830,000</span><span class="w-1/4 text-right">20%</span></div>
+                                <div class="flex justify-between font-bold text-white bg-int-dark px-3 py-1.5 rounded -mx-2 mt-1.5">
+                                    <span class="w-1/2">Total Ingresos</span><span class="w-1/4 text-right">$29,150,000</span><span class="w-1/4 text-right text-graf-olive">100%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- EGRESOS -->
+                        <div class="mb-3">
+                            <div class="bg-gray-100 px-2 md:px-4 py-1.5 rounded-t-lg flex justify-between font-bold text-[10px] uppercase tracking-widest text-int-dark">
+                                <span class="w-1/2">Egresos Operativos</span>
+                                <span class="w-1/4 text-right">Monto</span>
+                                <span class="w-1/4 text-right">% Ingresos</span>
+                            </div>
+                            <div class="px-2 md:px-4 py-1.5 space-y-1 text-[10px] md:text-[11px] text-int-gray border border-t-0 border-gray-100 rounded-b-lg">
+                                <div class="flex justify-between"><span class="w-1/2">Edificación</span><span class="w-1/4 text-right">$13,137,826</span><span class="w-1/4 text-right">45.1%</span></div>
+                                <div class="flex justify-between"><span class="w-1/2">Adquisición de Propiedad</span><span class="w-1/4 text-right">$2,550,000</span><span class="w-1/4 text-right">8.7%</span></div>
+                                <div class="flex justify-between"><span class="w-1/2">Supervisión de obra</span><span class="w-1/4 text-right">$120,000</span><span class="w-1/4 text-right">0.4%</span></div>
+                                <div class="flex justify-between"><span class="w-1/2">Imprevistos de obra</span><span class="w-1/4 text-right">$405,989</span><span class="w-1/4 text-right">1.4%</span></div>
+                                <div class="flex justify-between"><span class="w-1/2">Estudios y Proyectos</span><span class="w-1/4 text-right">$395,124</span><span class="w-1/4 text-right">1.4%</span></div>
+                                <div class="flex justify-between"><span class="w-1/2">Permisos y Licencias</span><span class="w-1/4 text-right">$466,724</span><span class="w-1/4 text-right">1.6%</span></div>
+                                <div class="flex justify-between"><span class="w-1/2">Gastos Legales y Notariales</span><span class="w-1/4 text-right">$90,000</span><span class="w-1/4 text-right">0.3%</span></div>
+                                <div class="flex justify-between font-bold text-int-dark border-y border-gray-100 py-1 my-0.5"><span class="w-1/2">Costo Total</span><span class="w-1/4 text-right">$17,165,663</span><span class="w-1/4 text-right">58.9%</span></div>
+                                <div class="flex justify-between"><span class="w-1/2">Comisiones de venta y publicidad</span><span class="w-1/4 text-right">$1,300,000</span><span class="w-1/4 text-right">4.5%</span></div>
+                                <div class="flex justify-between"><span class="w-1/2">Administración</span><span class="w-1/4 text-right">$2,613,615</span><span class="w-1/4 text-right">9.0%</span></div>
+                                <div class="flex justify-between font-bold text-int-dark bg-int-light px-2 py-0.5 rounded"><span class="w-1/2">Gasto de Operación</span><span class="w-1/4 text-right">$3,913,615</span><span class="w-1/4 text-right">13.4%</span></div>
+                                <div class="flex justify-between font-bold text-white bg-int-dark px-3 py-1.5 rounded -mx-2 mt-1.5">
+                                    <span class="w-1/2">Total Egresos</span><span class="w-1/4 text-right">$21,079,278</span><span class="w-1/4 text-right text-graf-maroon">72.3%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- UTILIDAD -->
+                        <div class="mt-auto pt-2">
+                            <div class="flex justify-between text-[11px] text-int-gray px-2 mb-1.5">
+                                <span class="w-1/4 md:w-1/2">IVA (16%)</span>
+                                <span class="w-[37%] md:w-1/4 text-right">$2,964,684.45</span>
+                                <span class="w-[38%] md:w-1/4 text-right font-bold text-int-dark">Tot: $24,043,962.26</span>
+                            </div>
+                            <div class="bg-int-purple text-white px-4 py-2.5 rounded-xl flex flex-col md:flex-row gap-1 md:gap-0 justify-between items-start md:items-center shadow-md">
+                                <span class="text-xs uppercase tracking-widest font-bold">Utilidad después de impuestos</span>
+                                <div class="text-right">
+                                    <span class="text-xl font-bold">$5,106,038</span>
+                                    <span class="bg-white/20 text-[10px] px-2 py-0.5 rounded ml-2">17.5% s/Ingresos</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- COLUMNA DER: Financiamiento -->
+                <div class="w-full md:w-4/12 flex flex-col gap-4 md:min-h-0">
+                    <div class="bg-graf-beige/30 border-l-4 border-graf-olive rounded-r-xl p-5 shadow-sm border border-y-gray-200 border-r-gray-200 flex-shrink-0">
+                        <p class="text-[10px] font-bold text-int-gray uppercase tracking-widest mb-1 flex items-center gap-2"><i class="ph ph-tag text-lg"></i> Precio del Depto</p>
+                        <p class="text-3xl font-bold text-int-dark">$2,650,000<span class="text-lg font-medium text-int-gray">.00</span></p>
+                    </div>
+
+                    <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm md:flex-1 flex flex-col md:min-h-0 md:overflow-y-auto">
+                        <p class="text-[11px] font-bold text-int-dark uppercase tracking-widest mb-3 flex items-center gap-2 border-b border-gray-100 pb-2"><i class="ph ph-hand-coins text-lg text-graf-olive"></i> Esquema de Financiamiento</p>
+                        
+                        <div class="space-y-3 flex-1">
+                            <div>
+                                <div class="flex justify-between text-[11px] font-bold text-int-dark mb-0.5"><span>Anticipo</span><span>30%</span></div>
+                                <div class="flex justify-between text-xs text-int-gray"><span class="text-[9px] uppercase">Al momento de firma</span><span class="font-bold text-graf-olive">$795,000.00</span></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[11px] font-bold text-int-dark mb-0.5"><span>Pagos a Meses</span><span>50%</span></div>
+                                <div class="flex justify-between text-xs text-int-gray"><span class="text-[9px] uppercase">Diferido en 16 meses</span><span class="font-bold text-int-dark">$1,325,000.00</span></div>
+                                <div class="text-[9px] text-right mt-1 bg-int-light rounded px-2 py-1 inline-block float-right text-int-gray">Cuota Mensual: <strong>$82,812.50</strong></div>
+                                <div class="clear-both"></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[11px] font-bold text-int-dark mb-0.5"><span>Finiquito</span><span>20%</span></div>
+                                <div class="flex justify-between text-xs text-int-gray"><span class="text-[9px] uppercase">A la entrega</span><span class="font-bold text-int-dark">$530,000.00</span></div>
+                            </div>
+                        </div>
+
+                        <div class="mt-3 bg-gray-50 p-2.5 rounded-lg flex justify-between items-center border border-gray-100 flex-shrink-0">
+                            <span class="text-[9px] font-bold text-int-gray uppercase tracking-widest">Meses de Financiamiento</span>
+                            <span class="text-base font-bold text-int-dark">16</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="slide" id="slide-flujo">
+        <!-- Encabezado Fijo -->
+        <div class="logo-box"><img src="presentacion/logo-interika.png" alt="Logo Interika"></div>
+        <div class="absolute top-6 md:top-8 right-6 md:right-10 text-int-gray text-xs bg-white/80 px-2 py-1 rounded z-20 font-medium tracking-wide">03 / Flujo de Efectivo</div>
+        
+        <!-- Reducción de padding superior (pt-14) e inferior (pb-6) para que quepa en pantalla -->
+        <div class="flex-1 flex flex-col h-full pt-24 md:pt-14 px-4 md:px-12 pb-24 md:pb-6">
+            <h1 class="text-2xl md:text-3xl font-bold text-int-dark mb-0.5 text-center tracking-tight">Proyección de Flujo de Efectivo</h1>
+            <p class="text-xs text-int-gray mb-1 text-center font-light">Análisis de liquidez real mensual durante la vida del proyecto.</p>
+            <p class="text-[9px] text-graf-olive font-bold text-center uppercase tracking-widest mb-3 flex justify-center items-center gap-1.5 animate-pulse">
+                <i class="ph ph-arrows-left-right text-sm"></i> Desliza la tabla para ver los 23 meses
+            </p>
+            
+            <!-- Contenedor Principal de la Tabla con min-h-0 para forzar el ajuste interno -->
+            <div class="bg-white border border-gray-200 rounded-2xl shadow-sm flex-1 overflow-hidden flex flex-col min-h-0">
+                <div class="bg-int-light px-6 py-2 border-b border-gray-200 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <i class="ph ph-chart-line-up text-graf-olive text-lg"></i>
+                        <span class="font-bold text-[10px] uppercase tracking-widest text-int-dark">MODELO FINANCIERO (M1 - M23) - EXPRESADO EN MILES (K)</span>
+                    </div>
+                </div>
+                
+                <div class="table-scroll overflow-x-auto overflow-y-auto flex-1 p-0 relative bg-white pb-2">
+                    <table class="w-full text-left border-collapse whitespace-nowrap text-[10px] text-int-gray">
+                        <thead>
+                            <tr class="bg-gray-50 text-int-dark uppercase tracking-wider font-bold">
+                                <th class="sticky-col sticky-header p-2 min-w-[170px] pl-6 text-[10px]">CONCEPTO</th>
+                                <th class="p-2 border-b border-gray-200 text-right text-int-dark font-extrabold bg-gray-100 min-w-[90px] pr-4">TOTAL</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M1</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M2</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M3</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M4</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M5</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M6</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M7</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M8</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M9</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M10</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M11</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px] font-bold text-graf-maroon">M12</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M13</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M14</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M15</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M16</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M17</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M18</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M19</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M20</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M21</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px]">M22</th>
+                                <th class="p-2 border-b border-gray-200 text-right min-w-[55px] pr-4 font-bold text-graf-olive">M23</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <!-- DESGLOSE INGRESOS -->
+                            <tr class="bg-white">
+                                <td class="sticky-col p-2 border-b border-gray-100 pl-6">Ingreso preventas depto</td>
+                                <td class="p-2 border-b border-gray-100 text-right font-bold text-int-dark bg-gray-50 pr-4">$8,745,000</td>
+                                <td class="p-2 border-b border-gray-100 text-right">1,590k</td><td class="p-2 border-b border-gray-100 text-right">1,590k</td>
+                                <td class="p-2 border-b border-gray-100 text-right">1,590k</td><td class="p-2 border-b border-gray-100 text-right">1,590k</td>
+                                <td class="p-2 border-b border-gray-100 text-right">1,590k</td><td class="p-2 border-b border-gray-100 text-right">795k</td>
+                                <td class="p-2 border-b border-gray-100 text-right">-</td><td class="p-2 border-b border-gray-100 text-right">-</td>
+                                <td class="p-2 border-b border-gray-100 text-right">-</td><td class="p-2 border-b border-gray-100 text-right">-</td>
+                                <td class="p-2 border-b border-gray-100 text-right">-</td><td class="p-2 border-b border-gray-100 text-right">-</td>
+                                <td class="p-2 border-b border-gray-100 text-right">-</td><td class="p-2 border-b border-gray-100 text-right">-</td>
+                                <td class="p-2 border-b border-gray-100 text-right">-</td><td class="p-2 border-b border-gray-100 text-right">-</td>
+                                <td class="p-2 border-b border-gray-100 text-right">-</td><td class="p-2 border-b border-gray-100 text-right">-</td>
+                                <td class="p-2 border-b border-gray-100 text-right">-</td><td class="p-2 border-b border-gray-100 text-right">-</td>
+                                <td class="p-2 border-b border-gray-100 text-right">-</td><td class="p-2 border-b border-gray-100 text-right">-</td>
+                                <td class="p-2 border-b border-gray-100 text-right pr-4">-</td>
+                            </tr>
+                            <tr class="bg-white">
+                                <td class="sticky-col p-2 border-b border-gray-100 pl-6">Ingreso ventas depto</td>
+                                <td class="p-2 border-b border-gray-100 text-right font-bold text-int-dark bg-gray-50 pr-4">$14,575,000</td>
+                                <td class="p-2 border-b border-gray-100 text-right">-</td><td class="p-2 border-b border-gray-100 text-right">166k</td>
+                                <td class="p-2 border-b border-gray-100 text-right">331k</td><td class="p-2 border-b border-gray-100 text-right">497k</td>
+                                <td class="p-2 border-b border-gray-100 text-right">663k</td><td class="p-2 border-b border-gray-100 text-right">828k</td>
+                                <td class="p-2 border-b border-gray-100 text-right">911k</td><td class="p-2 border-b border-gray-100 text-right">911k</td>
+                                <td class="p-2 border-b border-gray-100 text-right">911k</td><td class="p-2 border-b border-gray-100 text-right">911k</td>
+                                <td class="p-2 border-b border-gray-100 text-right">911k</td><td class="p-2 border-b border-gray-100 text-right">911k</td>
+                                <td class="p-2 border-b border-gray-100 text-right">911k</td><td class="p-2 border-b border-gray-100 text-right">911k</td>
+                                <td class="p-2 border-b border-gray-100 text-right">911k</td><td class="p-2 border-b border-gray-100 text-right">911k</td>
+                                <td class="p-2 border-b border-gray-100 text-right">911k</td><td class="p-2 border-b border-gray-100 text-right">745k</td>
+                                <td class="p-2 border-b border-gray-100 text-right">580k</td><td class="p-2 border-b border-gray-100 text-right">414k</td>
+                                <td class="p-2 border-b border-gray-100 text-right">248k</td><td class="p-2 border-b border-gray-100 text-right">83k</td>
+                                <td class="p-2 border-b border-gray-100 text-right pr-4">-</td>
+                            </tr>
+                            <tr class="bg-white">
+                                <td class="sticky-col p-2 border-b border-gray-200 pl-6">Ingreso finiquito depto</td>
+                                <td class="p-2 border-b border-gray-200 text-right font-bold text-int-dark bg-gray-50 pr-4">$5,830,000</td>
+                                <td class="p-2 border-b border-gray-200 text-right">-</td><td class="p-2 border-b border-gray-200 text-right">-</td>
+                                <td class="p-2 border-b border-gray-200 text-right">-</td><td class="p-2 border-b border-gray-200 text-right">-</td>
+                                <td class="p-2 border-b border-gray-200 text-right">-</td><td class="p-2 border-b border-gray-200 text-right">-</td>
+                                <td class="p-2 border-b border-gray-200 text-right">-</td><td class="p-2 border-b border-gray-200 text-right">-</td>
+                                <td class="p-2 border-b border-gray-200 text-right">-</td><td class="p-2 border-b border-gray-200 text-right">-</td>
+                                <td class="p-2 border-b border-gray-200 text-right">-</td><td class="p-2 border-b border-gray-200 text-right">-</td>
+                                <td class="p-2 border-b border-gray-200 text-right">-</td><td class="p-2 border-b border-gray-200 text-right">-</td>
+                                <td class="p-2 border-b border-gray-200 text-right">-</td><td class="p-2 border-b border-gray-200 text-right">-</td>
+                                <td class="p-2 border-b border-gray-200 text-right">-</td><td class="p-2 border-b border-gray-200 text-right">1,060k</td>
+                                <td class="p-2 border-b border-gray-200 text-right">1,060k</td><td class="p-2 border-b border-gray-200 text-right">1,060k</td>
+                                <td class="p-2 border-b border-gray-200 text-right">1,060k</td><td class="p-2 border-b border-gray-200 text-right">1,060k</td>
+                                <td class="p-2 border-b border-gray-200 text-right pr-4">530k</td>
+                            </tr>
+                            
+                            <!-- TOTAL INGRESOS -->
+                            <tr class="bg-int-dark text-white font-bold">
+                                <td class="sticky-col bg-int-dark p-2 border-b border-gray-700 pl-6 border-t text-white">Ingresos</td>
+                                <td class="p-2 border-b border-gray-700 text-right text-graf-olive bg-int-dark border-t pr-4">$29,150,000</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t">1,590k</td><td class="p-2 text-right border-b border-gray-700 border-t">1,756k</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t">1,921k</td><td class="p-2 text-right border-b border-gray-700 border-t">2,087k</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t">2,253k</td><td class="p-2 text-right border-b border-gray-700 border-t">1,623k</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t">911k</td><td class="p-2 text-right border-b border-gray-700 border-t">911k</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t">911k</td><td class="p-2 text-right border-b border-gray-700 border-t">911k</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t">911k</td><td class="p-2 text-right border-b border-gray-700 border-t">911k</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t">911k</td><td class="p-2 text-right border-b border-gray-700 border-t">911k</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t">911k</td><td class="p-2 text-right border-b border-gray-700 border-t">911k</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t">911k</td><td class="p-2 text-right border-b border-gray-700 border-t">1,805k</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t">1,640k</td><td class="p-2 text-right border-b border-gray-700 border-t">1,474k</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t">1,308k</td><td class="p-2 text-right border-b border-gray-700 border-t">1,143k</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t pr-4">530k</td>
+                            </tr>
+
+                            <!-- DESGLOSE EGRESOS -->
+                            <tr class="bg-white">
+                                <td class="sticky-col p-2 border-b border-gray-100 pl-6">Edificación</td>
+                                <td class="p-2 border-b border-gray-100 text-right font-bold text-int-dark bg-gray-50 pr-4">$13,137,826</td>
+                                <td class="p-2 border-b border-gray-100 text-right">486k</td><td class="p-2 border-b border-gray-100 text-right">1,034k</td>
+                                <td class="p-2 border-b border-gray-100 text-right">922k</td><td class="p-2 border-b border-gray-100 text-right">1,290k</td>
+                                <td class="p-2 border-b border-gray-100 text-right">1,317k</td><td class="p-2 border-b border-gray-100 text-right">1,088k</td>
+                                <td class="p-2 border-b border-gray-100 text-right">1,119k</td><td class="p-2 border-b border-gray-100 text-right">756k</td>
+                                <td class="p-2 border-b border-gray-100 text-right">942k</td><td class="p-2 border-b border-gray-100 text-right">1,390k</td>
+                                <td class="p-2 border-b border-gray-100 text-right">1,736k</td><td class="p-2 border-b border-gray-100 text-right font-bold text-graf-maroon bg-red-50">1,058k</td>
+                                <td class="p-2 border-b border-gray-100 text-right bg-gray-50">-</td><td class="p-2 border-b border-gray-100 text-right bg-gray-50">-</td>
+                                <td class="p-2 border-b border-gray-100 text-right bg-gray-50">-</td><td class="p-2 border-b border-gray-100 text-right bg-gray-50">-</td>
+                                <td class="p-2 border-b border-gray-100 text-right bg-gray-50">-</td><td class="p-2 border-b border-gray-100 text-right bg-gray-50">-</td>
+                                <td class="p-2 border-b border-gray-100 text-right bg-gray-50">-</td><td class="p-2 border-b border-gray-100 text-right bg-gray-50">-</td>
+                                <td class="p-2 border-b border-gray-100 text-right bg-gray-50">-</td><td class="p-2 border-b border-gray-100 text-right bg-gray-50">-</td>
+                                <td class="p-2 border-b border-gray-100 text-right bg-gray-50 pr-4">-</td>
+                            </tr>
+                            <tr class="bg-white">
+                                <td class="sticky-col p-2 border-b border-gray-200 pl-6">Otros</td>
+                                <td class="p-2 border-b border-gray-200 text-right font-bold text-int-dark bg-gray-50 pr-4">$7,941,452</td>
+                                <td class="p-2 border-b border-gray-200 text-right">1,053k</td><td class="p-2 border-b border-gray-200 text-right">478k</td>
+                                <td class="p-2 border-b border-gray-200 text-right">478k</td><td class="p-2 border-b border-gray-200 text-right">478k</td>
+                                <td class="p-2 border-b border-gray-200 text-right">478k</td><td class="p-2 border-b border-gray-200 text-right">478k</td>
+                                <td class="p-2 border-b border-gray-200 text-right">262k</td><td class="p-2 border-b border-gray-200 text-right">262k</td>
+                                <td class="p-2 border-b border-gray-200 text-right">262k</td><td class="p-2 border-b border-gray-200 text-right">262k</td>
+                                <td class="p-2 border-b border-gray-200 text-right">261k</td><td class="p-2 border-b border-gray-200 text-right font-bold text-graf-maroon bg-red-50">3,188k</td>
+                                <td class="p-2 border-b border-gray-200 text-right bg-gray-50">-</td><td class="p-2 border-b border-gray-200 text-right bg-gray-50">-</td>
+                                <td class="p-2 border-b border-gray-200 text-right bg-gray-50">-</td><td class="p-2 border-b border-gray-200 text-right bg-gray-50">-</td>
+                                <td class="p-2 border-b border-gray-200 text-right bg-gray-50">-</td><td class="p-2 border-b border-gray-200 text-right bg-gray-50">-</td>
+                                <td class="p-2 border-b border-gray-200 text-right bg-gray-50">-</td><td class="p-2 border-b border-gray-200 text-right bg-gray-50">-</td>
+                                <td class="p-2 border-b border-gray-200 text-right bg-gray-50">-</td><td class="p-2 border-b border-gray-200 text-right bg-gray-50">-</td>
+                                <td class="p-2 border-b border-gray-200 text-right bg-gray-50 pr-4">-</td>
+                            </tr>
+                            
+                            <!-- TOTAL EGRESOS (Con color rojo claro para resaltar en fondo negro) -->
+                            <tr class="bg-int-dark text-white font-bold">
+                                <td class="sticky-col bg-int-dark p-2 border-b border-gray-700 pl-6 border-t text-white">Egresos</td>
+                                <td class="p-2 border-b border-gray-700 text-right text-red-400 bg-int-dark border-t pr-4">$21,079,278</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t text-red-300">1,539k</td><td class="p-2 text-right border-b border-gray-700 border-t text-red-300">1,512k</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t text-red-300">1,400k</td><td class="p-2 text-right border-b border-gray-700 border-t text-red-300">1,768k</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t text-red-300">1,795k</td><td class="p-2 text-right border-b border-gray-700 border-t text-red-300">1,566k</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t text-red-300">1,380k</td><td class="p-2 text-right border-b border-gray-700 border-t text-red-300">1,018k</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t text-red-300">1,204k</td><td class="p-2 text-right border-b border-gray-700 border-t text-red-300">1,652k</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t text-red-300">1,998k</td><td class="p-2 text-right border-b border-gray-700 border-t text-red-400">4,246k</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t text-gray-500">-</td><td class="p-2 text-right border-b border-gray-700 border-t text-gray-500">-</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t text-gray-500">-</td><td class="p-2 text-right border-b border-gray-700 border-t text-gray-500">-</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t text-gray-500">-</td><td class="p-2 text-right border-b border-gray-700 border-t text-gray-500">-</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t text-gray-500">-</td><td class="p-2 text-right border-b border-gray-700 border-t text-gray-500">-</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t text-gray-500">-</td><td class="p-2 text-right border-b border-gray-700 border-t text-gray-500">-</td>
+                                <td class="p-2 text-right border-b border-gray-700 border-t text-gray-500 pr-4">-</td>
+                            </tr>
+
+                            <!-- IVA -->
+                            <tr class="bg-white">
+                                <td class="sticky-col p-2 border-b border-gray-200 pl-6">Iva a pagar</td>
+                                <td class="p-2 border-b border-gray-200 text-right font-bold text-int-dark bg-gray-50 pr-4">$2,964,684</td>
+                                <td class="p-2 border-b border-gray-200 text-right">246k</td><td class="p-2 border-b border-gray-200 text-right">242k</td>
+                                <td class="p-2 border-b border-gray-200 text-right">224k</td><td class="p-2 border-b border-gray-200 text-right">283k</td>
+                                <td class="p-2 border-b border-gray-200 text-right">287k</td><td class="p-2 border-b border-gray-200 text-right">251k</td>
+                                <td class="p-2 border-b border-gray-200 text-right">221k</td><td class="p-2 border-b border-gray-200 text-right">163k</td>
+                                <td class="p-2 border-b border-gray-200 text-right">193k</td><td class="p-2 border-b border-gray-200 text-right">264k</td>
+                                <td class="p-2 border-b border-gray-200 text-right">320k</td><td class="p-2 border-b border-gray-200 text-right bg-gray-50">271k</td>
+                                <td class="p-2 border-b border-gray-200 text-right">-</td><td class="p-2 border-b border-gray-200 text-right">-</td>
+                                <td class="p-2 border-b border-gray-200 text-right">-</td><td class="p-2 border-b border-gray-200 text-right">-</td>
+                                <td class="p-2 border-b border-gray-200 text-right">-</td><td class="p-2 border-b border-gray-200 text-right">-</td>
+                                <td class="p-2 border-b border-gray-200 text-right">-</td><td class="p-2 border-b border-gray-200 text-right">-</td>
+                                <td class="p-2 border-b border-gray-200 text-right">-</td><td class="p-2 border-b border-gray-200 text-right">-</td>
+                                <td class="p-2 border-b border-gray-200 text-right pr-4">-</td>
+                            </tr>
+                            
+                            <!-- INGRESOS - EGRESOS -->
+                            <tr class="bg-gray-100">
+                                <td class="sticky-col bg-gray-100 p-2 border-y border-gray-200 font-bold text-int-dark pl-6">Ingresos - Egresos</td>
+                                <td class="p-2 border-y border-gray-200 text-right font-bold text-int-dark bg-gray-200 pr-4">$8,070,722</td>
+                                <td class="p-2 text-right font-bold border-y border-gray-200">51k</td><td class="p-2 text-right font-bold border-y border-gray-200">244k</td>
+                                <td class="p-2 text-right font-bold border-y border-gray-200">521k</td><td class="p-2 text-right font-bold border-y border-gray-200">319k</td>
+                                <td class="p-2 text-right font-bold border-y border-gray-200">458k</td><td class="p-2 text-right font-bold border-y border-gray-200">57k</td>
+                                <td class="p-2 text-right font-bold text-graf-maroon border-y border-gray-200">-469k</td><td class="p-2 text-right font-bold text-graf-maroon border-y border-gray-200">-107k</td>
+                                <td class="p-2 text-right font-bold text-graf-maroon border-y border-gray-200">-293k</td><td class="p-2 text-right font-bold text-graf-maroon border-y border-gray-200">-741k</td>
+                                <td class="p-2 text-right font-bold text-graf-maroon border-y border-gray-200">-1,087k</td><td class="p-2 text-right font-bold text-graf-maroon border-y border-gray-200">-3,335k</td>
+                                <td class="p-2 text-right font-bold border-y border-gray-200">911k</td><td class="p-2 text-right font-bold border-y border-gray-200">911k</td>
+                                <td class="p-2 text-right font-bold border-y border-gray-200">911k</td><td class="p-2 text-right font-bold border-y border-gray-200">911k</td>
+                                <td class="p-2 text-right font-bold border-y border-gray-200">911k</td><td class="p-2 text-right font-bold border-y border-gray-200">1,805k</td>
+                                <td class="p-2 text-right font-bold border-y border-gray-200">1,640k</td><td class="p-2 text-right font-bold border-y border-gray-200">1,474k</td>
+                                <td class="p-2 text-right font-bold border-y border-gray-200">1,308k</td><td class="p-2 text-right font-bold border-y border-gray-200">1,143k</td>
+                                <td class="p-2 text-right font-bold border-y border-gray-200 pr-4">530k</td>
+                            </tr>
+
+                            <!-- FLUJO NETO -->
+                            <tr class="bg-graf-beige/40">
+                                <td class="sticky-col bg-graf-beige/90 p-2 border-b border-gray-200 font-bold text-int-dark pl-6">Flujo neto</td>
+                                <td class="p-2 border-b border-gray-200 text-right font-bold text-int-dark bg-graf-beige pr-4">$5,106,038</td>
+                                <td class="p-2 text-right font-bold border-b border-gray-200 text-graf-maroon">-195k</td><td class="p-2 text-right font-bold border-b border-gray-200">2k</td>
+                                <td class="p-2 text-right font-bold border-b border-gray-200">297k</td><td class="p-2 text-right font-bold border-b border-gray-200">36k</td>
+                                <td class="p-2 text-right font-bold border-b border-gray-200">171k</td><td class="p-2 text-right font-bold text-graf-maroon border-b border-gray-200">-194k</td>
+                                <td class="p-2 text-right font-bold text-graf-maroon border-b border-gray-200">-690k</td><td class="p-2 text-right font-bold text-graf-maroon border-b border-gray-200">-270k</td>
+                                <td class="p-2 text-right font-bold text-graf-maroon border-b border-gray-200">-486k</td><td class="p-2 text-right font-bold text-graf-maroon border-b border-gray-200">-1,005k</td>
+                                <td class="p-2 text-right font-bold text-graf-maroon border-b border-gray-200">-1,407k</td><td class="p-2 text-right font-bold text-graf-maroon border-b border-gray-200">-3,606k</td>
+                                <td class="p-2 text-right font-bold border-b border-gray-200">911k</td><td class="p-2 text-right font-bold border-b border-gray-200">911k</td>
+                                <td class="p-2 text-right font-bold border-b border-gray-200">911k</td><td class="p-2 text-right font-bold border-b border-gray-200">911k</td>
+                                <td class="p-2 text-right font-bold border-b border-gray-200">911k</td><td class="p-2 text-right font-bold border-b border-gray-200">1,805k</td>
+                                <td class="p-2 text-right font-bold border-b border-gray-200">1,639k</td><td class="p-2 text-right font-bold border-b border-gray-200">1,474k</td>
+                                <td class="p-2 text-right font-bold border-b border-gray-200">1,308k</td><td class="p-2 text-right font-bold border-b border-gray-200">1,143k</td>
+                                <td class="p-2 text-right font-bold border-b border-gray-200 pr-4">530k</td>
+                            </tr>
+
+                            <!-- FLUJO NETO ACUMULADO -->
+                            <tr class="bg-graf-olive/10">
+                                <td class="sticky-col bg-graf-olive/10 p-2.5 border-b border-graf-olive/30 font-bold text-graf-olive pl-6">Flujo neto acumulado</td>
+                                <td class="p-2.5 border-b border-graf-olive/30 text-right font-bold text-graf-olive bg-graf-olive/20 pr-4">$5,106,038</td>
+                                <td class="p-2.5 text-right font-bold border-b border-graf-olive/30 text-graf-maroon">-195k</td><td class="p-2.5 text-right font-bold border-b border-graf-olive/30 text-graf-maroon">-194k</td>
+                                <td class="p-2.5 text-right font-bold border-b border-graf-olive/30">103k</td><td class="p-2.5 text-right font-bold border-b border-graf-olive/30">139k</td>
+                                <td class="p-2.5 text-right font-bold border-b border-graf-olive/30">309k</td><td class="p-2.5 text-right font-bold border-b border-graf-olive/30">115k</td>
+                                <td class="p-2.5 text-right font-bold border-b border-graf-olive/30 text-graf-maroon">-575k</td><td class="p-2.5 text-right font-bold border-b border-graf-olive/30 text-graf-maroon">-845k</td>
+                                <td class="p-2.5 text-right font-bold border-b border-graf-olive/30 text-graf-maroon">-1,330k</td><td class="p-2.5 text-right font-bold border-b border-graf-olive/30 text-graf-maroon">-2,335k</td>
+                                <td class="p-2.5 text-right font-bold border-b border-graf-olive/30 text-graf-maroon">-3,742k</td>
+                                <!-- Máximo Requerimiento de Capital -->
+                                <td class="p-2.5 text-right font-bold text-white border-b border-graf-olive/30 bg-graf-maroon">-7,349k</td>
+                                <td class="p-2.5 text-right font-bold border-b border-graf-olive/30 text-graf-maroon">-6,438k</td><td class="p-2.5 text-right font-bold border-b border-graf-olive/30 text-graf-maroon">-5,527k</td>
+                                <td class="p-2.5 text-right font-bold border-b border-graf-olive/30 text-graf-maroon">-4,616k</td><td class="p-2.5 text-right font-bold border-b border-graf-olive/30 text-graf-maroon">-3,705k</td>
+                                <td class="p-2.5 text-right font-bold border-b border-graf-olive/30 text-graf-maroon">-2,794k</td><td class="p-2.5 text-right font-bold border-b border-graf-olive/30 text-graf-maroon">-989k</td>
+                                <!-- Punto de Recuperación y Utilidad Final -->
+                                <td class="p-2.5 text-right font-bold text-int-purple border-b border-graf-olive/30 bg-int-purple/10">651k</td>
+                                <td class="p-2.5 text-right font-bold border-b border-graf-olive/30">2,125k</td><td class="p-2.5 text-right font-bold border-b border-graf-olive/30">3,433k</td>
+                                <td class="p-2.5 text-right font-bold border-b border-graf-olive/30">4,576k</td>
+                                <td class="p-2.5 text-right font-bold border-b border-graf-olive/30 text-white bg-graf-olive pr-4">5,106k</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+<div class="slide" id="slide-indicadores">
+        <div class="logo-box"><img src="presentacion/logo-interika.png" alt="Logo Interika"></div>
+        <div class="absolute top-6 md:top-10 right-6 md:right-10 text-int-gray text-xs md:text-sm bg-white/80 px-2 py-1 rounded z-20 font-medium tracking-wide">04 / Indicadores de Retorno</div>
+        
+        <div class="flex-1 flex flex-col h-auto md:h-full pt-24 md:pt-[100px] px-5 md:px-16 pb-28 md:pb-12 justify-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-int-dark mb-2 text-center tracking-tight">Indicadores de Viabilidad</h1>
+            <p class="text-sm md:text-base text-int-gray mb-8 md:mb-12 text-center font-light max-w-2xl mx-auto">Métricas clave de rentabilidad, márgenes operativos y eficiencia del capital invertido para el desarrollo de la Torre PV.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 max-w-5xl mx-auto w-full">
+                <!-- TIR -->
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-200 flex flex-col justify-between border-t-4 border-t-graf-olive relative overflow-hidden">
+                    <i class="ph ph-trend-up absolute -right-6 -bottom-6 text-[120px] text-gray-50 opacity-50 z-0"></i>
+                    <div class="relative z-10">
+                        <p class="text-xs font-bold text-int-gray uppercase tracking-widest mb-2 flex items-center gap-2">TIR Proyecto</p>
+                        <p class="text-5xl md:text-6xl font-bold text-int-dark mb-4">86.63<span class="text-3xl">%</span></p>
+                        <p class="text-xs text-int-gray bg-gray-50 p-3 rounded border border-gray-100 leading-relaxed">Rendimiento anualizado de la inversión sobre el periodo determinado del desarrollo.</p>
+                    </div>
+                </div>
+
+                <!-- ROI -->
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-200 flex flex-col justify-between border-t-4 border-t-int-purple relative overflow-hidden">
+                    <i class="ph ph-arrows-merge absolute -right-6 -bottom-6 text-[120px] text-gray-50 opacity-50 z-0"></i>
+                    <div class="relative z-10">
+                        <p class="text-xs font-bold text-int-gray uppercase tracking-widest mb-2 flex items-center gap-2">% ROI</p>
+                        <p class="text-5xl md:text-6xl font-bold text-int-dark mb-2">69.48<span class="text-3xl">%</span></p>
+                        <p class="text-sm font-semibold text-int-purple mb-4">0.6948 Veces el Capital</p>
+                        <p class="text-xs text-int-gray bg-gray-50 p-3 rounded border border-gray-100 leading-relaxed">Valor total del retorno sobre aportación inicial de capital de los inversionistas.</p>
+                    </div>
+                </div>
+
+                <!-- REQUERIMIENTO -->
+                <div class="bg-int-dark p-6 md:p-8 rounded-2xl shadow-lg border border-gray-800 flex flex-col justify-between relative overflow-hidden">
+                    <div class="relative z-10">
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Requerimiento Capital</p>
+                        <p class="text-4xl md:text-5xl font-bold text-white mb-2">-$7,348,962</p>
+                        <p class="text-xs text-gray-400 mt-auto">Monto máximo de exposición financiera en el punto más bajo del flujo de efectivo.</p>
+                    </div>
+                </div>
+
+                <!-- UTILIDAD Y MARGEN -->
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-200 flex flex-col justify-between">
+                    <div>
+                        <p class="text-xs font-bold text-int-gray uppercase tracking-widest mb-1">Utilidad Proyecto</p>
+                        <p class="text-3xl md:text-4xl font-bold text-graf-olive mb-6">$5,106,038</p>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center bg-gray-50 px-4 py-2.5 rounded-lg border border-gray-100">
+                            <span class="text-[10px] font-bold text-int-gray uppercase tracking-wider">% Margen Utilidad Proyecto</span>
+                            <span class="text-sm font-bold text-int-dark">24% Sobre costo</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-gray-50 px-4 py-2.5 rounded-lg border border-gray-100">
+                            <span class="text-[10px] font-bold text-int-gray uppercase tracking-wider">% Margen Utilidad Proyecto</span>
+                            <span class="text-sm font-bold text-int-dark">18% Sobre Ingresos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="slide" id="slide-sintesis-f13">
+        <div class="logo-box"><img src="presentacion/logo-interika.png" alt="Logo Interika"></div>
+        <div class="absolute top-6 md:top-10 right-6 md:right-10 text-int-gray text-xs md:text-sm bg-white/80 px-2 py-1 rounded z-20 font-medium tracking-wide">05 / Síntesis Financiera</div>
+        
+        <div class="flex-1 flex flex-col h-auto md:h-full pt-24 md:pt-[100px] px-5 md:px-16 pb-28 md:pb-12">
+            <h1 class="text-3xl font-bold text-int-dark mb-1 text-center tracking-tight">Síntesis Financiera Fase 1.3</h1>
+            <p class="text-sm text-int-gray mb-6 md:mb-10 text-center font-light">Resumen ejecutivo del modelo de negocio, costos y viabilidad económica del proyecto.</p>
+            
+            <div class="flex flex-col md:flex-row gap-6 md:gap-8 flex-1">
+                <!-- COLUMNA IZQ: Puntos Clave -->
+                <div class="w-full md:w-1/2 bg-[#FAFAFA] rounded-2xl border border-gray-100 shadow-sm p-5 md:p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="mb-6">
+                            <p class="text-[10px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-2 mb-3 border-b border-gray-200 pb-2"><i class="ph ph-wallet text-base"></i> Costo y Comercialización</p>
+                            <p class="text-sm text-int-dark leading-relaxed mb-3">El proyecto tiene un costo total estimado en <strong>$24.04 MDP</strong>. Los ingresos se proyectan en <strong>$29.15 MDP</strong> mediante una mezcla agresiva de preventas (30% depto / 20% com) y ventas consolidadas (50%), con un precio de salida de <strong>$2.65 MDP</strong> por departamento financiado a 16 meses.</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-[10px] text-int-gray uppercase tracking-widest font-bold flex items-center gap-2 mb-3 border-b border-gray-200 pb-2"><i class="ph ph-chart-bar text-base"></i> Viabilidad y Retorno</p>
+                            <p class="text-sm text-int-dark leading-relaxed">El modelo arroja una excelente Tasa Interna de Retorno (TIR) del <strong>86.63%</strong> y un ROI del <strong>69.48%</strong>, garantizando una alta rentabilidad y velocidad en la recuperación del capital aportado.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMNA DER: Énfasis en Inversión vs Utilidad -->
+                <div class="w-full md:w-1/2 flex flex-col gap-4">
+                    
+                    <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm flex flex-col justify-center items-center relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-2 h-full bg-graf-maroon"></div>
+                        <span class="text-[10px] text-int-gray uppercase tracking-widest font-bold block mb-1">Capital en Riesgo (Inversión Máxima Requerida)</span>
+                        <span class="text-3xl md:text-4xl font-bold text-int-dark">-$7.34 MDP</span>
+                        <span class="text-xs text-int-gray mt-2">Monto máximo que los inversionistas deberán desembolsar</span>
+                    </div>
+
+                    <div class="flex justify-center -my-2 z-10">
+                        <div class="bg-int-light border border-gray-200 rounded-full p-2 shadow-sm text-int-purple">
+                            <i class="ph ph-arrow-down font-bold"></i>
+                        </div>
+                    </div>
+
+                    <div class="bg-int-dark text-white rounded-xl p-6 shadow-lg flex flex-col justify-center items-center relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-2 h-full bg-graf-olive"></div>
+                        <span class="text-[10px] text-gray-400 uppercase tracking-widest font-bold block mb-1">Utilidad Neta del Proyecto</span>
+                        <span class="text-4xl md:text-5xl font-bold text-white mb-2">$5.10 MDP</span>
+                        <span class="bg-white/10 px-3 py-1 rounded text-xs font-medium text-gray-300 border border-white/20">Margen del 18% directo sobre ingresos</span>
+                    </div>
+
+                    <div class="bg-graf-olive/10 border border-graf-olive/20 rounded-xl p-4 shadow-sm flex flex-col justify-center items-center mt-2">
+                        <span class="text-[10px] text-graf-olive uppercase tracking-widest font-bold block mb-1">Retorno de Inversión (ROI)</span>
+                        <span class="text-xl font-bold text-graf-olive">69.48% (0.69x Veces el Capital)</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ============================================================= -->
+    <!-- DIAPOSITIVA FINAL: LOGO + BOTÓN A LA PÁGINA WEB -->
+    <!-- ============================================================= -->
+<div class="slide" id="slide-final">
+    <div class="flex-1 flex flex-col items-center justify-center px-6 gap-10 md:gap-14">
+        <img src="presentacion/logo-interika.png" alt="Logo Interika" class="h-24 md:h-36 w-auto max-w-[80%] object-contain">
+        <a href="https://www.interika.mx" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-3 bg-int-purple text-white px-8 md:px-10 py-4 rounded-xl font-medium text-base md:text-lg shadow-md hover:bg-int-dark transition-colors duration-300">
+            <i class="ph ph-globe text-xl md:text-2xl"></i>
+            Ir a la página web
+        </a>
+    </div>
 </div>
 
     <script>
@@ -1749,6 +2495,7 @@
             
             // Regresa al scroll top cuando cambias de slide en celular
             slides[current].scrollTo(0,0);
+            if (slides[current].id === 'slide-precedentes') { requestAnimationFrame(function(){ centerMap(); }); }
             
             document.getElementById('prev').disabled = current === 0;
             document.getElementById('next').disabled = current === slides.length - 1;
@@ -1964,10 +2711,41 @@
             document.querySelectorAll('.pin').forEach(p => p.classList.remove('active'));
 
             btnElement.classList.add('active');
+            panel.dataset.pos = (parseFloat(btnElement.style.top) > 45) ? 'top' : 'bottom';
+            centerMap(btnElement);
             panel.classList.add('visible');
             overlay.classList.remove('opacity-0');
             overlay.classList.add('opacity-100');
         }
+
+        // En celular el mapa es más ancho que la pantalla: se centra solo y se puede deslizar
+        function centerMap(pin) {
+            if (window.innerWidth >= 768) return;
+            const sc = document.getElementById('map-scroll');
+            if (!sc) return;
+            let target;
+            if (pin && pin.nodeType === 1) {
+                target = pin.offsetLeft - sc.clientWidth / 2;
+            } else {
+                const pins = Array.from(document.querySelectorAll('#map-stage .pin'));
+                if (!pins.length) return;
+                const avg = pins.reduce(function(a, p){ return a + p.offsetLeft; }, 0) / pins.length;
+                target = avg - sc.clientWidth / 2;
+            }
+            sc.scrollTo({ left: Math.max(0, target), behavior: (pin && pin.nodeType === 1) ? 'smooth' : 'auto' });
+        }
+
+        (function () {
+            const img = document.getElementById('map-base-img');
+            const stage = document.getElementById('map-stage');
+            if (!img || !stage) return;
+            function setAr() {
+                if (img.naturalWidth && img.naturalHeight) {
+                    stage.style.setProperty('--map-ar', (img.naturalWidth / img.naturalHeight).toFixed(4));
+                }
+            }
+            if (img.complete) setAr(); else img.addEventListener('load', setAr);
+        })();
 
         function closePanel() {
             document.querySelectorAll('.pin').forEach(p => p.classList.remove('active'));
